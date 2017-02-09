@@ -1,6 +1,6 @@
 require "openxml/pptx/version"
 
-module Openxml
+module OpenXml
   module Pptx
     # Your code goes here...
   end

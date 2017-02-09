@@ -1,4 +1,4 @@
-module Openxml
+module OpenXml
   module Pptx
     VERSION = "0.1.0"
   end
