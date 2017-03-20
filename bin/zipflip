@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+
+require "zip"
+require "pathname"
+require "shellwords"
+
+# c.f. https://github.com/rubyzip/rubyzip/blob/05916bf89181e1955118fd3ea059f18acac28cc8/samples/example_recursive.rb
+class ZipFileGenerator
+
+  def initialize(input_dir, output_file)
+    @input_dir = Pathname(input_dir)
+    @output_file = Pathname(output_file)
+  end
+
+  def write
+    @output_file.delete if @output_file.exist?
+    Zip::File.open(@output_file, Zip::File::CREATE) do |io|
+      write_entries entries_in(@input_dir), "", io
+    end
+  end
+
+  private def write_entries(entries, path, io)
+    entries.each do |entry|
+      zip_file_path = path == "" ? entry : File.join(path, entry)
+      disk_file_path = File.join(@input_dir, zip_file_path)
+      if File.directory?(disk_file_path)
+        io.mkdir zip_file_path
+        write_entries entries_in(disk_file_path), zip_file_path, io
+      else
+        io.get_output_stream(zip_file_path) do |stream|
+          stream.puts File.open(disk_file_path, "rb").read
+        end
+      end
+    end
+  end
+
+  private def entries_in(path)
+    entries = Dir.entries(path)
+    entries.delete(".")
+    entries.delete("..")
+    entries.delete(".DS_Store")
+    entries
+  end
+
+end
+
+
+
+path = Pathname.new(ARGV.shift)
+
+if path.directory?
+  zf = ZipFileGenerator.new(path, "#{path.basename}.pptx")
+  zf.write
+else
+  system "unzip #{Shellwords.escape path} -d #{path.basename(".pptx")}"
+end
