@@ -235,11 +235,6 @@
         </p:txBody>
       </p:sp>
     </p:spTree>
-    <p:extLst>
-      <p:ext uri="{BB962C8B-B14F-4D97-AF65-F5344CB8AC3E}">
-        <p14:creationId xmlns:p14="http://schemas.microsoft.com/office/powerpoint/2010/main" val="941974447"/>
-      </p:ext>
-    </p:extLst>
   </p:cSld>
   <p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/>
   <p:sldLayoutIdLst>
