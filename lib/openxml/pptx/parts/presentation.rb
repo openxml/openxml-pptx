@@ -3,7 +3,7 @@ require "openxml/elements/slide_size"
 
 module OpenXml
   module Pptx
-    module Parts
+    module Pts
       class Presentation < OpenXml::Part
         def slide_size
           OpenXml::Pptx::Elements::SlideSize.new.tap do |size|
