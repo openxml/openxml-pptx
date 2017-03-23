@@ -26,9 +26,9 @@ RSpec::Matchers.define :have_part_at do |part_path|
   failure_message do
     """
     Expected #{part_path} to be
-    #{@expected.inspect}
+    #{@expected.inspect.gsub("<", "\n<")}
     but got
-    #{@actual.inspect}
+    #{@actual.inspect.gsub("<", "\n<")}
     """
   end
 end
