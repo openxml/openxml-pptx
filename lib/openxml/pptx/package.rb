@@ -21,7 +21,7 @@ module OpenXml
 
         @presentation = OpenXml::Pptx::Parts::Presentation.new
 
-        presentation.add_relationship REL_THEME, "theme/themBasic.xml"
+        presentation.add_relationship REL_THEME, "theme/themeBasic.xml"
         presentation.add_relationship REL_SLIDE_MASTERS, "slideMasters/slideMasterBasic.xml"
 
         add_part "ppt/presentation.xml", presentation
