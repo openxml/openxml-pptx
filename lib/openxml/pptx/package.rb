@@ -6,13 +6,20 @@ module OpenXml
   module Pptx
     class Package < OpenXml::Package
       attr_reader :presentation
-      REL_PRESENTATION = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
       TYPE_PRESENTATION = "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
+      TYPE_SLIDEMASTER = "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
+      TYPE_THEME = "application/vnd.openxmlformats-officedocument.theme+xml"
+      TYPE_SLIDELAYOUTS = "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"
+
+      REL_PRESENTATION = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
       REL_THEME = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
       REL_SLIDE_MASTERS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster"
 
       content_types do
         override "/ppt/presentation.xml", TYPE_PRESENTATION
+        override "/ppt/slideMasters/slideMasterBasic.xml", TYPE_SLIDEMASTER
+        override "/ppt/theme/themeBasic.xml", TYPE_THEME
+        override "/ppt/slideLayouts/slideLayoutBasic.xml", TYPE_SLIDELAYOUTS
       end
 
       def set_defaults

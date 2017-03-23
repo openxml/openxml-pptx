@@ -20,12 +20,16 @@ RSpec::Matchers.define :have_part_at do |part_path|
     squish(ignore_ids(content))
   end
 
+  define_method :inspect_xml do |xml|
+    xml.inspect.gsub("<", "\n<")
+  end
+
   failure_message do
     """
     Expected #{part_path} to be
-    #{@expected.inspect.gsub("<", "\n<")}
+    #{inspect_xml(@expected)}
     but got
-    #{@actual.inspect.gsub("<", "\n<")}
+    #{inspect_xml(@actual)}
     """
   end
 end
