@@ -8,12 +8,6 @@
         <p:nvPr/>
       </p:nvGrpSpPr>
       <p:grpSpPr>
-        <a:xfrm>
-          <a:off x="0" y="0"/>
-          <a:ext cx="0" cy="0"/>
-          <a:chOff x="0" y="0"/>
-          <a:chExt cx="0" cy="0"/>
-        </a:xfrm>
       </p:grpSpPr>
       <p:sp>
         <p:nvSpPr>
