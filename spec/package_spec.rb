@@ -44,12 +44,12 @@ describe OpenXml::Pptx::Package do
     end
 
     specify do
-      expect(entries_of(subject)).to contain_exactly(*entries_of(fixture("minimal")))
+      expect(entries_of(subject)).to contain_exactly(*entries_of(pptx("minimal")))
     end
 
     specify do
       aggregate_failures do
-        fixture("minimal").parts.each do |part_path, expected_part|
+        pptx("minimal").parts.each do |part_path, expected_part|
           is_expected.to have_part_at(part_path).with_content(expected_part.content)
         end
       end
@@ -60,8 +60,8 @@ describe OpenXml::Pptx::Package do
     package.parts.keys
   end
 
-  def fixture(fixture_name)
-    pathname = Pathname("spec/fixtures/#{fixture_name}.pptx")
+  def pptx(pptx_name)
+    pathname = Pathname("spec/fixtures/#{pptx_name}.pptx")
     OpenXml::Pptx::Package.open(pathname.realpath)
   end
 end
