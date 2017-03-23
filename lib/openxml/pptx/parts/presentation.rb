@@ -1,23 +1,8 @@
+require "openxml/elements/notes_size"
+require "openxml/elements/slide_size"
+
 module OpenXml
   module Pptx
-
-    module Elements
-      require "openxml/extract/element"
-      class SlideSize < OpenXml::Element
-        tag :sldSz
-
-        attribute :cx
-        attribute :cy
-      end
-
-      class NotesSize < OpenXml::Element
-        tag :notesSz
-
-        attribute :cx
-        attribute :cy
-      end
-    end
-
     module Parts
       class Presentation < OpenXml::Part
         def slide_size
