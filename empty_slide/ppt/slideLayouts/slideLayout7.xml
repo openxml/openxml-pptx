@@ -10,11 +10,6 @@
       <p:grpSpPr>
       </p:grpSpPr>
     </p:spTree>
-    <p:extLst>
-      <p:ext uri="{BB962C8B-B14F-4D97-AF65-F5344CB8AC3E}">
-        <p14:creationId xmlns:p14="http://schemas.microsoft.com/office/powerpoint/2010/main" val="736517746"/>
-      </p:ext>
-    </p:extLst>
   </p:cSld>
   <p:clrMapOvr>
     <a:masterClrMapping/>
