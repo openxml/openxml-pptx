@@ -5,6 +5,17 @@ module OpenXml
   module Pptx
     module Parts
       class Presentation < OpenXml::Part
+        attr_accessor :relationships
+        private :relationships=
+
+        def initialize
+          self.relationships = OpenXml::Parts::Rels.new
+        end
+
+        def add_relationship(schema, path)
+          relationships.add_relationship(schema, path)
+        end
+
         def slide_size
           OpenXml::Pptx::Elements::SlideSize.new.tap do |size|
             size.cx = 12192000

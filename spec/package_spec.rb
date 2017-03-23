@@ -1,10 +1,7 @@
 require "spec_helper"
-require "pry"
 require "support/matchers/have_part_at"
 
 describe OpenXml::Pptx::Package do
-  attr_reader :package
-
   context "when starting a new package" do
     subject { described_class.new }
 
