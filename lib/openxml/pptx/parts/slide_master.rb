@@ -40,6 +40,8 @@ module OpenXml
           parent.add_part rest, "slideMasters/slideMasterBasic.xml", self
           parent.add_part rest, "slideMasters/_rels/slideMasterBasic.xml.rels", relationships
           parent.add_override rest, "slideMasters/slideMasterBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
+
+          parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster", "slideMasters/slideMasterBasic.xml"
         end
 
         def to_xml

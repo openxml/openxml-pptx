@@ -9,20 +9,8 @@ module OpenXml
         attr_accessor :relationships
         private :relationships=
 
-        def self.defualt_relationships
-          @default_relationships ||= []
-        end
-
-        def self.relationship(type, target)
-          self.defualt_relationships << [type, target]
-        end
-
         def initialize
           self.relationships = OpenXml::Parts::Rels.new
-
-          self.class.defualt_relationships.each do |type, target|
-            add_relationship type, target
-          end
         end
 
         def add_relationship(type, target)
@@ -33,6 +21,8 @@ module OpenXml
           parent, *rest = ancestors
           parent.add_part rest, "theme/themeBasic.xml", self
           parent.add_override rest, "theme/themeBasic.xml", "application/vnd.openxmlformats-officedocument.theme+xml"
+
+          parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme", "theme/themeBasic.xml"
         end
 
         def to_xml

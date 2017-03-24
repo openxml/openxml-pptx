@@ -10,22 +10,6 @@ end
 
 RSpec.describe OpenXml::Pptx::Parts::Presentation do
   specify do
-    expect(subject.relationships).to_not be_empty
-  end
-
-  it do
-    is_expected.to include_relationship(
-      "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
-      "theme/themeBasic.xml")
-  end
-
-  it do
-    is_expected.to include_relationship(
-      "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
-      "slideMasters/slideMasterBasic.xml")
-  end
-
-  specify do
     parent = double(:parent, add_part: nil, add_override: nil)
 
     expect(parent).to receive(:add_part).with("ppt/presentation.xml", subject)
