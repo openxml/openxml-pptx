@@ -1,5 +1,9 @@
+# frozen_string_literals: true
 require "openxml/elements/notes_size"
 require "openxml/elements/slide_size"
+require "openxml/pptx/parts/slide_master"
+require "openxml/pptx/parts/slide_layout"
+require "openxml/pptx/parts/theme"
 
 module OpenXml
   module Pptx
@@ -34,11 +38,26 @@ module OpenXml
           relationships.add_relationship(type, target)
         end
 
-        def add_to(parent)
+        def add_to(ancestors)
+          parent, *rest = ancestors
           parent.add_part "ppt/presentation.xml", self
           parent.add_part "ppt/_rels/presentation.xml.rels", relationships
-          parent.add_override "/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
+          parent.add_override "ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
           parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "ppt/presentation.xml"
+
+          OpenXml::Pptx::Parts::SlideMaster.new.add_to [self, parent, *rest]
+          OpenXml::Pptx::Parts::SlideLayout.new.add_to [self, parent, *rest]
+          OpenXml::Pptx::Parts::Theme.new.add_to [self, parent, *rest]
+        end
+
+        def add_part(ancestors, path, part)
+          parent, *rest = ancestors
+          parent.add_part "ppt/#{path}", part
+        end
+
+        def add_override(ancestors, part_name, content_type)
+          parent, *rest = ancestors
+          parent.add_override "ppt/#{part_name}", content_type
         end
 
         def slide_size

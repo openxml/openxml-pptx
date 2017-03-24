@@ -1,4 +1,5 @@
 require "spec_helper"
+require "rspec/matchers"
 require "equivalent-xml"
 
 describe OpenXml::Pptx::Package do
@@ -23,7 +24,7 @@ describe OpenXml::Pptx::Package do
     end
 
     pptx("minimal").parts.each do |part_path, expected_part|
-      specify do
+      specify "part at #{part_path} has proper content" do
         expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id")
       end
     end
