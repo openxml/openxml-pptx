@@ -35,6 +35,11 @@ module OpenXml
           relationships.add_relationship(type, target)
         end
 
+        def add_to(parent)
+          parent.add_part "ppt/presentation.xml", self
+          parent.add_part "ppt/_rels/presentation.xml.rels", relationships
+        end
+
         def slide_size
           OpenXml::Pptx::Elements::SlideSize.new.tap do |size|
             size.cx = 12192000

@@ -9,22 +9,29 @@ RSpec::Matchers.define :include_relationship do |type, target|
 end
 
 RSpec.describe OpenXml::Pptx::Parts::Presentation do
-  describe "with no added relationships" do
-    specify do
-      expect(subject.relationships).to_not be_empty
-    end
+  specify do
+    expect(subject.relationships).to_not be_empty
+  end
 
-    it do
-      is_expected.to include_relationship(
-        "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
-        "theme/themeBasic.xml")
-    end
+  it do
+    is_expected.to include_relationship(
+      "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
+      "theme/themeBasic.xml")
+  end
 
-    it do
-      is_expected.to include_relationship(
-        "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
-        "slideMasters/slideMasterBasic.xml")
-    end
+  it do
+    is_expected.to include_relationship(
+      "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
+      "slideMasters/slideMasterBasic.xml")
+  end
+
+  specify do
+    parent = double(:parent)
+
+    expect(parent).to receive(:add_part).with("ppt/presentation.xml", subject)
+    expect(parent).to receive(:add_part).with("ppt/_rels/presentation.xml.rels", subject.relationships)
+
+    subject.add_to parent
   end
 
   describe "with a relationship" do

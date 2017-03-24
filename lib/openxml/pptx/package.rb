@@ -5,7 +5,6 @@ require "openxml/pptx/parts/presentation"
 module OpenXml
   module Pptx
     class Package < OpenXml::Package
-      attr_reader :presentation
       TYPE_PRESENTATION = "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
       TYPE_THEME = "application/vnd.openxmlformats-officedocument.theme+xml"
       TYPE_SLIDEMASTER = "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
@@ -24,10 +23,9 @@ module OpenXml
         super
         rels.add_relationship REL_PRESENTATION, "ppt/presentation.xml"
 
-        @presentation = OpenXml::Pptx::Parts::Presentation.new
+        presentation = OpenXml::Pptx::Parts::Presentation.new
 
-        add_part "ppt/presentation.xml", presentation
-        add_part "ppt/_rels/presentation.xml.rels", presentation.relationships
+        presentation.add_to self
       end
     end
   end
