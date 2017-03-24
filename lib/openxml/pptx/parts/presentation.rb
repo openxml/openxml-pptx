@@ -7,10 +7,9 @@ module OpenXml
       class Presentation < OpenXml::Part
         attr_accessor :relationships
         private :relationships=
-        @default_relationships = []
 
         def self.defualt_relationships
-          @default_relationships
+          @default_relationships ||= []
         end
 
         def self.relationship(type, target)
