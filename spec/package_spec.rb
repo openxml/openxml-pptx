@@ -1,5 +1,4 @@
 require "spec_helper"
-require "support/matchers/have_part_at"
 require "equivalent-xml"
 
 describe OpenXml::Pptx::Package do
