@@ -20,8 +20,8 @@ module OpenXml
         relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
                      "../theme/themeBasic.xml")
 
-        relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
-                     "../slideMasters/slideMasterBasic.xml")
+        relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout",
+                     "../slideLayouts/slideLayoutBasic.xml")
 
         def initialize
           self.relationships = OpenXml::Parts::Rels.new
