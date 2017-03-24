@@ -38,6 +38,7 @@ module OpenXml
           parent.add_part "ppt/presentation.xml", self
           parent.add_part "ppt/_rels/presentation.xml.rels", relationships
           parent.add_override "/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
+          parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "ppt/presentation.xml"
         end
 
         def slide_size
