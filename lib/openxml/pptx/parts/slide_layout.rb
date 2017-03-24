@@ -16,11 +16,7 @@ module OpenXml
         def self.relationship(type, target)
           self.defualt_relationships << [type, target]
         end
-
-        relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
-                     "../theme/themeBasic.xml")
-
-        relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout",
+        relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
                      "../slideMasters/slideMasterBasic.xml")
 
         def initialize
