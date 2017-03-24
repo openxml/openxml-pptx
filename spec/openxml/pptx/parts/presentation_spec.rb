@@ -30,6 +30,10 @@ RSpec.describe OpenXml::Pptx::Parts::Presentation do
 
     expect(parent).to receive(:add_part).with("ppt/presentation.xml", subject)
     expect(parent).to receive(:add_part).with("ppt/_rels/presentation.xml.rels", subject.relationships)
+    expect(parent).to receive(:add_override).with(
+      "/ppt/presentation.xml",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
+    )
 
     subject.add_to parent
   end

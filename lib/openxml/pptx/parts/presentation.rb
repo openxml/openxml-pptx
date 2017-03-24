@@ -37,6 +37,7 @@ module OpenXml
         def add_to(parent)
           parent.add_part "ppt/presentation.xml", self
           parent.add_part "ppt/_rels/presentation.xml.rels", relationships
+          parent.add_override "/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
         end
 
         def slide_size
