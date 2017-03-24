@@ -7,13 +7,32 @@ module OpenXml
       class Presentation < OpenXml::Part
         attr_accessor :relationships
         private :relationships=
+        @default_relationships = []
+
+        def self.defualt_relationships
+          @default_relationships
+        end
+
+        def self.relationship(type, target)
+          self.defualt_relationships << [type, target]
+        end
+
+        relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
+                         "theme/themeBasic.xml")
+
+        relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
+                         "slideMasters/slideMasterBasic.xml")
 
         def initialize
           self.relationships = OpenXml::Parts::Rels.new
+
+          self.class.defualt_relationships.each do |type, target|
+            add_relationship type, target
+          end
         end
 
-        def add_relationship(schema, path)
-          relationships.add_relationship(schema, path)
+        def add_relationship(type, target)
+          relationships.add_relationship(type, target)
         end
 
         def slide_size

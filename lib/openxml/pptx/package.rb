@@ -7,13 +7,11 @@ module OpenXml
     class Package < OpenXml::Package
       attr_reader :presentation
       TYPE_PRESENTATION = "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
-      TYPE_SLIDEMASTER = "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
       TYPE_THEME = "application/vnd.openxmlformats-officedocument.theme+xml"
+      TYPE_SLIDEMASTER = "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
       TYPE_SLIDELAYOUTS = "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"
 
       REL_PRESENTATION = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
-      REL_THEME = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
-      REL_SLIDE_MASTERS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster"
 
       content_types do
         override "/ppt/presentation.xml", TYPE_PRESENTATION
@@ -27,9 +25,6 @@ module OpenXml
         rels.add_relationship REL_PRESENTATION, "ppt/presentation.xml"
 
         @presentation = OpenXml::Pptx::Parts::Presentation.new
-
-        presentation.add_relationship REL_THEME, "theme/themeBasic.xml"
-        presentation.add_relationship REL_SLIDE_MASTERS, "slideMasters/slideMasterBasic.xml"
 
         add_part "ppt/presentation.xml", presentation
         add_part "ppt/_rels/presentation.xml.rels", presentation.relationships
