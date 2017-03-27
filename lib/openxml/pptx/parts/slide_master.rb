@@ -46,7 +46,7 @@ module OpenXml
 
         def to_xml
           build_standalone_xml do |xml|
-            xml.presentation(namespaces) do
+            xml.sldMaster(namespaces) do
               xml.parent.namespace = :p
             end
           end

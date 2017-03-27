@@ -27,7 +27,7 @@ module OpenXml
 
         def to_xml
           build_standalone_xml do |xml|
-            xml.presentation(namespaces) do
+            xml.theme(namespaces) do
               xml.parent.namespace = :a
             end
           end
@@ -36,6 +36,7 @@ module OpenXml
         private def namespaces
           {
             "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "name": "Office Theme",
           }
         end
       end
