@@ -40,7 +40,7 @@ module OpenXml
 
         def to_xml
           build_standalone_xml do |xml|
-            xml.presentation(namespaces) do
+            xml.sldLayout(namespaces) do
               xml.parent.namespace = :p
             end
           end
@@ -50,7 +50,9 @@ module OpenXml
           {
             "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
             "xmlns:r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
-            "xmlns:p": "http://schemas.openxmlformats.org/presentationml/2006/main"
+            "xmlns:p": "http://schemas.openxmlformats.org/presentationml/2006/main",
+            "type": "blank",
+            "preserve": "1",
           }
         end
       end
