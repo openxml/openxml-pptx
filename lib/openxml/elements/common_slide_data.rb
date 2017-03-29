@@ -9,11 +9,9 @@ module OpenXml
 
         attribute :name
 
-
         def shape_tree
           ShapeTree.new
         end
-
 
         def to_xml(xml)
           xml[namespace].public_send(tag, xml_attributes) {

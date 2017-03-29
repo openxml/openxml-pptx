@@ -1,6 +1,4 @@
 # frozen_string_literals: true
-require "openxml/elements/notes_size"
-require "openxml/elements/slide_size"
 require "openxml/elements/common_slide_data"
 
 module OpenXml
@@ -11,19 +9,20 @@ module OpenXml
         private :relationships=
 
         def self.defualt_relationships
-          @default_relationships ||= []
+          @default_relationships ||= {}
         end
 
         def self.relationship(type, target)
-          self.defualt_relationships << [type, target]
+          self.defualt_relationships.store(type, target)
         end
+
         relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
                      "../slideMasters/slideMasterBasic.xml")
 
         def initialize
           self.relationships = OpenXml::Parts::Rels.new
 
-          self.class.defualt_relationships.each do |type, target|
+          self.class.defualt_relationships.each_pair do |type, target|
             add_relationship type, target
           end
         end

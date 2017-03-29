@@ -7,12 +7,11 @@
         <p:cNvGrpSpPr/>
         <p:nvPr/>
       </p:nvGrpSpPr>
-      <p:grpSpPr>
-      </p:grpSpPr>
+      <p:grpSpPr/>
     </p:spTree>
   </p:cSld>
   <p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/>
   <p:sldLayoutIdLst>
-    <p:sldLayoutId id="2147483655" r:id="rId7"/>
+    <p:sldLayoutId r:id="rId7"/>
   </p:sldLayoutIdLst>
 </p:sldMaster>
