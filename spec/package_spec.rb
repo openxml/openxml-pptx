@@ -44,7 +44,7 @@ describe OpenXml::Pptx::Package do
 
     pptx("empty_slide").parts.each do |part_path, expected_part|
       specify "part at #{part_path} has proper content" do
-        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "r:id")
+        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "id")
       end
     end
   end
