@@ -1,6 +1,7 @@
 # frozen_string_literals: true
 require "openxml/elements/notes_size"
 require "openxml/elements/slide_size"
+require "openxml/elements/common_slide_data"
 
 module OpenXml
   module Pptx
@@ -38,10 +39,17 @@ module OpenXml
           parent.add_override rest, "slideLayouts/slideLayoutBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"
         end
 
+        def common_slide_data
+          OpenXml::Pptx::Elements::CommonSlideData.new.tap do |common_slide_data|
+            common_slide_data.name = "Blank"
+          end
+        end
+
         def to_xml
           build_standalone_xml do |xml|
             xml.sldLayout(namespaces) do
               xml.parent.namespace = :p
+              common_slide_data.to_xml(xml)
             end
           end
         end

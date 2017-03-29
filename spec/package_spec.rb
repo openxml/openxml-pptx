@@ -13,8 +13,6 @@ describe OpenXml::Pptx::Package do
   end
 
   context "when starting a new package" do
-    subject { described_class.new }
-
     specify do
       expect(subject.content_types).to be_instance_of(OpenXml::Parts::ContentTypes)
     end
@@ -24,6 +22,27 @@ describe OpenXml::Pptx::Package do
     end
 
     pptx("minimal").parts.each do |part_path, expected_part|
+      specify "part at #{part_path} has proper content" do
+        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id")
+      end
+    end
+  end
+
+  context "with a single blank slide" do
+    let(:slide) { double(:slide) }
+    before do
+      subject.add_slide(slide)
+    end
+
+    specify do
+      expect(subject.content_types).to be_instance_of(OpenXml::Parts::ContentTypes)
+    end
+
+    specify do
+      expect(entries_of(subject)).to contain_exactly(*entries_of(pptx("empty_slide")))
+    end
+
+    pptx("empty_slide").parts.each do |part_path, expected_part|
       specify "part at #{part_path} has proper content" do
         expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id")
       end

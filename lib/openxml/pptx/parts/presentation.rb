@@ -9,15 +9,22 @@ module OpenXml
   module Pptx
     module Parts
       class Presentation < OpenXml::Part
-        attr_accessor :relationships
+        attr_accessor :relationships, :layout, :master, :theme, :slides
         private :relationships=
 
         def initialize
           self.relationships = OpenXml::Parts::Rels.new
+          self.master = OpenXml::Pptx::Parts::SlideMaster.new
+          self.layout = OpenXml::Pptx::Parts::SlideLayout.new
+          self.theme = OpenXml::Pptx::Parts::Theme.new
+          self.slides = []
         end
 
         def add_relationship(type, target)
           relationships.add_relationship(type, target)
+        end
+
+        def add_slide(slide)
         end
 
         def add_to(ancestors)
@@ -27,9 +34,9 @@ module OpenXml
           parent.add_override "ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
           parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "ppt/presentation.xml"
 
-          OpenXml::Pptx::Parts::SlideMaster.new.add_to [self, parent, *rest]
-          OpenXml::Pptx::Parts::SlideLayout.new.add_to [self, parent, *rest]
-          OpenXml::Pptx::Parts::Theme.new.add_to [self, parent, *rest]
+          master.add_to [self, parent, *rest]
+          layout.add_to [self, parent, *rest]
+          theme.add_to [self, parent, *rest]
         end
 
         def add_part(ancestors, path, part)
