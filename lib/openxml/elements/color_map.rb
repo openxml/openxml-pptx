@@ -4,7 +4,7 @@ module OpenXml
   module Pptx
     module Elements
       class ColorMap < OpenXml::Element
-        tag :cSld
+        tag :clrMap
 
         attribute :bg1
         attribute :tx1
