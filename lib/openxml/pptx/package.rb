@@ -24,7 +24,7 @@ module OpenXml
       end
 
       def presentation
-        peesentation ||= OpenXml::Pptx::Parts::Presentation.new
+        @presentation ||= OpenXml::Pptx::Parts::Presentation.new
       end
     end
   end

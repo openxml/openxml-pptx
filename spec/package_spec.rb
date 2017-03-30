@@ -1,6 +1,7 @@
 require "spec_helper"
 require "rspec/matchers"
 require "equivalent-xml"
+require "openxml/pptx/parts/slide"
 
 describe OpenXml::Pptx::Package do
   def self.pptx(pptx_name)
@@ -29,7 +30,7 @@ describe OpenXml::Pptx::Package do
   end
 
   context "with a single blank slide" do
-    let(:slide) { double(:slide) }
+    let(:slide) { OpenXml::Pptx::Parts::Slide.new }
     before do
       subject.add_slide(slide)
     end

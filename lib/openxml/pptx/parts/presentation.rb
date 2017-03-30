@@ -5,6 +5,7 @@ require "openxml/pptx/parts/slide_master"
 require "openxml/pptx/parts/slide_layout"
 require "openxml/pptx/parts/theme"
 require "openxml/elements/slide_master_list"
+require "openxml/elements/slide_id_list"
 
 module OpenXml
   module Pptx
@@ -18,8 +19,8 @@ module OpenXml
           self.master = OpenXml::Pptx::Parts::SlideMaster.new
           self.layout = OpenXml::Pptx::Parts::SlideLayout.new
           self.theme = OpenXml::Pptx::Parts::Theme.new
-          self.slides = []
-          self.masters = []
+          self.slides = OpenXml::Pptx::Elements::SlideIdList.new
+          self.masters = OpenXml::Pptx::Elements::SlideMasterList.new
         end
 
         def add_relationship(type, target)
@@ -27,6 +28,7 @@ module OpenXml
         end
 
         def add_slide(slide)
+          slide.add_to [self]
         end
 
         def add_to(ancestors)
@@ -53,7 +55,12 @@ module OpenXml
 
         def add_master_relationship(type, target)
           relationship = add_relationship(type, target)
-          self.masters.push(relationship)
+          self.masters.add_master(relationship)
+        end
+
+        def add_slide_relationship(type, target)
+          relationship = add_relationship(type, target)
+          self.slides.add_slide(relationship)
         end
 
         def slide_size
@@ -70,21 +77,14 @@ module OpenXml
           end
         end
 
-        def slide_master_list
-          OpenXml::Pptx::Elements::SlideMasterList.new.tap { |slide_master_list|
-            masters.each do |relationship|
-              slide_master_list.add_master(relationship)
-            end
-          }
-        end
-
         def to_xml
           build_standalone_xml do |xml|
             xml.presentation(namespaces) do
               xml.parent.namespace = :p
               slide_size.to_xml(xml)
               notes_size.to_xml(xml)
-              slide_master_list.to_xml(xml)
+              masters.to_xml(xml)
+              slides.to_xml(xml)
             end
           end
         end
