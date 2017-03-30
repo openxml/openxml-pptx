@@ -23,7 +23,6 @@ module OpenXml
         relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
                      "../theme/themeBasic.xml")
 
-
         LAYOUT_SCHEMA =
           "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
         relationship(LAYOUT_SCHEMA,
@@ -47,7 +46,7 @@ module OpenXml
           parent.add_part rest, "slideMasters/_rels/slideMasterBasic.xml.rels", relationships
           parent.add_override rest, "slideMasters/slideMasterBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
 
-          parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster", "slideMasters/slideMasterBasic.xml"
+          parent.add_master_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster", "slideMasters/slideMasterBasic.xml"
         end
 
         def common_slide_data

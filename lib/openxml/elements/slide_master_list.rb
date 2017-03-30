@@ -3,8 +3,8 @@ require "openxml/extract/element"
 module OpenXml
   module Pptx
     module Elements
-      class SlideLayoutId < OpenXml::Element
-        tag :sldLayoutId
+      class SlideMasterId < OpenXml::Element
+        tag :sldMastertId
 
         attribute :id, expects: :string, namespace: :r
 
@@ -14,25 +14,25 @@ module OpenXml
         end
       end
 
-      class SlideLayoutList < OpenXml::Element
-        tag :sldLayoutIdLst
+      class SlideMasterList < OpenXml::Element
+        tag :sldMasterLst
 
-        attr_accessor :layout_ids
-        private :layout_ids=
+        attr_accessor :master_ids
+        private :master_ids=
 
         def initialize
           super
-          self.layout_ids = []
+          self.master_ids = []
         end
 
-        def add_layout(relationship)
-          layout_ids.push(relationship.id)
+        def add_master(relationship)
+          master_ids.push(SlideMasterId.new(relationship.id))
         end
 
         def to_xml(xml)
           xml[namespace].public_send(tag, xml_attributes) {
-            layout_ids.each do |layout_id|
-              SlideLayoutId.new(layout_id).to_xml(xml)
+            master_ids.each do |master_id|
+              master_id.to_xml(xml)
             end
           }
         end
