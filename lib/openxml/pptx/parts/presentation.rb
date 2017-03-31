@@ -27,8 +27,8 @@ module OpenXml
           relationships.add_relationship(type, target)
         end
 
-        def add_slide(slide)
-          slide.add_to [self]
+        def add_slide(parent, slide)
+          slide.add_to [self, parent]
         end
 
         def add_to(ancestors)

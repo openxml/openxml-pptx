@@ -14,7 +14,7 @@ module OpenXml
       end
 
       def add_slide(slide)
-        presentation.add_slide(slide)
+        presentation.add_slide(self, slide)
       end
 
       def set_defaults
