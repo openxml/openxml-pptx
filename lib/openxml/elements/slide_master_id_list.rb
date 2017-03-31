@@ -14,7 +14,7 @@ module OpenXml
         end
       end
 
-      class SlideMasterList < OpenXml::Element
+      class SlideMasterIdList < OpenXml::Element
         tag :sldMasterIdLst
 
         attr_accessor :master_ids

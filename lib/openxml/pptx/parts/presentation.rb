@@ -4,7 +4,7 @@ require "openxml/elements/slide_size"
 require "openxml/pptx/parts/slide_master"
 require "openxml/pptx/parts/slide_layout"
 require "openxml/pptx/parts/theme"
-require "openxml/elements/slide_master_list"
+require "openxml/elements/slide_master_id_list"
 require "openxml/elements/slide_id_list"
 
 module OpenXml
@@ -20,7 +20,7 @@ module OpenXml
           self.layout = OpenXml::Pptx::Parts::SlideLayout.new
           self.theme = OpenXml::Pptx::Parts::Theme.new
           self.slides = OpenXml::Pptx::Elements::SlideIdList.new
-          self.masters = OpenXml::Pptx::Elements::SlideMasterList.new
+          self.masters = OpenXml::Pptx::Elements::SlideMasterIdList.new
         end
 
         def add_relationship(type, target)
