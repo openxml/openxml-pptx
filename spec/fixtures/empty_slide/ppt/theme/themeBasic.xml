@@ -189,9 +189,4 @@
       </a:bgFillStyleLst>
     </a:fmtScheme>
   </a:themeElements>
-<<<<<<< HEAD
-=======
-  <a:objectDefaults/>
-  <a:extraClrSchemeLst/>
->>>>>>> Remove extlist from basic theme
 </a:theme>
