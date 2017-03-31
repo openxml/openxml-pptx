@@ -53,61 +53,9 @@
     </a:fontScheme>
     <a:fmtScheme name="Office">
       <a:fillStyleLst>
-        <a:solidFill>
-          <a:schemeClr val="phClr"/>
-        </a:solidFill>
-        <a:gradFill rotWithShape="1">
-          <a:gsLst>
-            <a:gs pos="0">
-              <a:schemeClr val="phClr">
-                <a:lumMod val="110000"/>
-                <a:satMod val="105000"/>
-                <a:tint val="67000"/>
-              </a:schemeClr>
-            </a:gs>
-            <a:gs pos="50000">
-              <a:schemeClr val="phClr">
-                <a:lumMod val="105000"/>
-                <a:satMod val="103000"/>
-                <a:tint val="73000"/>
-              </a:schemeClr>
-            </a:gs>
-            <a:gs pos="100000">
-              <a:schemeClr val="phClr">
-                <a:lumMod val="105000"/>
-                <a:satMod val="109000"/>
-                <a:tint val="81000"/>
-              </a:schemeClr>
-            </a:gs>
-          </a:gsLst>
-          <a:lin ang="5400000" scaled="0"/>
-        </a:gradFill>
-        <a:gradFill rotWithShape="1">
-          <a:gsLst>
-            <a:gs pos="0">
-              <a:schemeClr val="phClr">
-                <a:satMod val="103000"/>
-                <a:lumMod val="102000"/>
-                <a:tint val="94000"/>
-              </a:schemeClr>
-            </a:gs>
-            <a:gs pos="50000">
-              <a:schemeClr val="phClr">
-                <a:satMod val="110000"/>
-                <a:lumMod val="100000"/>
-                <a:shade val="100000"/>
-              </a:schemeClr>
-            </a:gs>
-            <a:gs pos="100000">
-              <a:schemeClr val="phClr">
-                <a:lumMod val="99000"/>
-                <a:satMod val="120000"/>
-                <a:shade val="78000"/>
-              </a:schemeClr>
-            </a:gs>
-          </a:gsLst>
-          <a:lin ang="5400000" scaled="0"/>
-        </a:gradFill>
+        <a:noFill/>
+        <a:noFill/>
+        <a:noFill/>
       </a:fillStyleLst>
       <a:lnStyleLst>
         <a:ln/>
