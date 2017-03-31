@@ -4,7 +4,7 @@ module OpenXml
   module Pptx
     module Elements
       class SlideMasterId < OpenXml::Element
-        tag :sldMastertId
+        tag :sldMasterId
 
         attribute :id, expects: :string, namespace: :r
 
@@ -15,7 +15,7 @@ module OpenXml
       end
 
       class SlideMasterList < OpenXml::Element
-        tag :sldMasterLst
+        tag :sldMasterIdLst
 
         attr_accessor :master_ids
         private :master_ids=
