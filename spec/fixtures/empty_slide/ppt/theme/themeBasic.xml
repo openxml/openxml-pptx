@@ -144,42 +144,9 @@
         </a:effectStyle>
       </a:effectStyleLst>
       <a:bgFillStyleLst>
-        <a:solidFill>
-          <a:schemeClr val="phClr"/>
-        </a:solidFill>
-        <a:solidFill>
-          <a:schemeClr val="phClr">
-            <a:tint val="95000"/>
-            <a:satMod val="170000"/>
-          </a:schemeClr>
-        </a:solidFill>
-        <a:gradFill rotWithShape="1">
-          <a:gsLst>
-            <a:gs pos="0">
-              <a:schemeClr val="phClr">
-                <a:tint val="93000"/>
-                <a:satMod val="150000"/>
-                <a:shade val="98000"/>
-                <a:lumMod val="102000"/>
-              </a:schemeClr>
-            </a:gs>
-            <a:gs pos="50000">
-              <a:schemeClr val="phClr">
-                <a:tint val="98000"/>
-                <a:satMod val="130000"/>
-                <a:shade val="90000"/>
-                <a:lumMod val="103000"/>
-              </a:schemeClr>
-            </a:gs>
-            <a:gs pos="100000">
-              <a:schemeClr val="phClr">
-                <a:shade val="63000"/>
-                <a:satMod val="120000"/>
-              </a:schemeClr>
-            </a:gs>
-          </a:gsLst>
-          <a:lin ang="5400000" scaled="0"/>
-        </a:gradFill>
+        <a:noFill/>
+        <a:noFill/>
+        <a:noFill/>
       </a:bgFillStyleLst>
     </a:fmtScheme>
   </a:themeElements>
