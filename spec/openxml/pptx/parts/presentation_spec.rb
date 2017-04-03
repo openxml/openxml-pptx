@@ -1,12 +1,5 @@
 require "spec_helper"
-
-RSpec::Matchers.define :include_relationship do |type, target|
-  match do |object|
-    object.relationships.any? { |relationship|
-      relationship.type == type && relationship.target = target
-    }
-  end
-end
+require "support/matchers/include_relationship"
 
 RSpec.describe OpenXml::Pptx::Parts::Presentation do
   specify do
