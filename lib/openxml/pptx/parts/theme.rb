@@ -29,6 +29,7 @@ module OpenXml
           build_standalone_xml do |xml|
             xml.theme(namespaces) do
               xml.parent.namespace = :a
+              OpenXml::DrawingML::Elements::ThemeElements.new.to_xml(xml)
             end
           end
         end

@@ -9,8 +9,8 @@ module OpenXml
   module Pptx
     module Parts
       class SlideMaster < OpenXml::Part
-        attr_accessor :relationships
-        private :relationships=
+        attr_accessor :relationships, :theme
+        private :relationships=, :theme=
 
         def self.defualt_relationships
           @default_relationships ||= {}
@@ -28,8 +28,9 @@ module OpenXml
         relationship(LAYOUT_SCHEMA,
                      "../slideLayouts/slideLayoutBasic.xml")
 
-        def initialize
+        def initialize(theme)
           self.relationships = OpenXml::Parts::Rels.new
+          self.theme = theme
 
           self.class.defualt_relationships.each_pair do |type, target|
             add_relationship type, target
@@ -47,6 +48,7 @@ module OpenXml
           parent.add_override rest, "slideMasters/slideMasterBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
 
           parent.add_master_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster", "slideMasters/slideMasterBasic.xml"
+          theme.add_to [self, parent, *rest]
         end
 
         def common_slide_data

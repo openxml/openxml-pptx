@@ -1,4 +1,4 @@
-require "extract/attribute_builder"
+require "openxml/extract/attribute_builder"
 
 module OpenXml
   class Element

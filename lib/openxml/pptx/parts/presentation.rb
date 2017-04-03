@@ -11,15 +11,13 @@ module OpenXml
   module Pptx
     module Parts
       class Presentation < OpenXml::Part
-        attr_accessor :relationships, :layout, :master, :theme, :slides, :masters
-        private :relationships=
+        attr_accessor :relationships, :slides, :masters
+        private :relationships=, :slides=
 
         def initialize
           self.relationships = OpenXml::Parts::Rels.new
-          self.master = OpenXml::Pptx::Parts::SlideMaster.new
-          self.layout = OpenXml::Pptx::Parts::SlideLayout.new
-          self.theme = OpenXml::Pptx::Parts::Theme.new
-          self.slides = OpenXml::Pptx::Elements::SlideIdList.new
+          self.slides = []
+          self.layouts = OpenXml::Pptx::Elements::SlideLayoutList.new
           self.masters = OpenXml::Pptx::Elements::SlideMasterIdList.new
         end
 
@@ -27,8 +25,8 @@ module OpenXml
           relationships.add_relationship(type, target)
         end
 
-        def add_slide(parent, slide)
-          slide.add_to [self, parent]
+        def add_slide(slide)
+          self.slides.push(slide)
         end
 
         def add_to(ancestors)
@@ -37,10 +35,9 @@ module OpenXml
           parent.add_part "ppt/_rels/presentation.xml.rels", relationships
           parent.add_override "ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
           parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "ppt/presentation.xml"
-
-          master.add_to [self, parent, *rest]
-          layout.add_to [self, parent, *rest]
-          theme.add_to [self, parent, *rest]
+          slides.each do |slide|
+            slide.add_to([self])
+          end
         end
 
         def add_part(ancestors, path, part)
@@ -60,7 +57,7 @@ module OpenXml
 
         def add_slide_relationship(type, target)
           relationship = add_relationship(type, target)
-          self.slides.add_slide(relationship)
+          self.slide_layouts.add_slide(relationship)
         end
 
         def slide_size
@@ -84,7 +81,7 @@ module OpenXml
               slide_size.to_xml(xml)
               notes_size.to_xml(xml)
               masters.to_xml(xml)
-              slides.to_xml(xml)
+              slide_layouts.to_xml(xml)
             end
           end
         end

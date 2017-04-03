@@ -30,9 +30,15 @@ describe OpenXml::Pptx::Package do
   end
 
   context "with a single blank slide" do
-    let(:slide) { OpenXml::Pptx::Parts::Slide.new }
+    let(:theme) { OpenXml::Pptx::Parts::Theme.new }
+    let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
+    let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
+    let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
+    let(:presentation) { OpenXml::Pptx::Parts::Presentation.new }
+
     before do
-      subject.add_slide(slide)
+      presentation.add_slide(slide)
+      subject.add_presentation(presentation)
     end
 
     specify do
