@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 gem "openxml-package", github: "openxml/openxml-package", branch: "master"
+gem "openxml-drawingml", github: "openxml/openxml-drawingml", branch: "master"
