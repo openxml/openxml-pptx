@@ -9,15 +9,15 @@ module OpenXml
   module Pptx
     module Parts
       class SlideMaster < OpenXml::Part
-        attr_accessor :relationships, :theme
-        private :relationships=, :theme=
+        attr_accessor :relationships, :theme, :layouts
+        private :relationships=, :theme=, :layouts=
 
-        def self.defualt_relationships
+        def self.default_relationships
           @default_relationships ||= {}
         end
 
         def self.relationship(type, target)
-          self.defualt_relationships.store(type, target)
+          self.default_relationships.store(type, target)
         end
 
         relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
@@ -31,8 +31,9 @@ module OpenXml
         def initialize(theme)
           self.relationships = OpenXml::Parts::Rels.new
           self.theme = theme
+          self.layouts = OpenXml::Pptx::Elements::SlideLayoutList.new
 
-          self.class.defualt_relationships.each_pair do |type, target|
+          self.class.default_relationships.each_pair do |type, target|
             add_relationship type, target
           end
         end
@@ -48,7 +49,8 @@ module OpenXml
           parent.add_override rest, "slideMasters/slideMasterBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
 
           parent.add_master_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster", "slideMasters/slideMasterBasic.xml"
-          theme.add_to [self, parent, *rest]
+
+          theme.add_to [parent, *rest]
         end
 
         def common_slide_data

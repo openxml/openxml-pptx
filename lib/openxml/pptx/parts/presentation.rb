@@ -11,13 +11,13 @@ module OpenXml
   module Pptx
     module Parts
       class Presentation < OpenXml::Part
-        attr_accessor :relationships, :slides, :masters
-        private :relationships=, :slides=
+        attr_accessor :package, :relationships, :slides, :masters
+        private :package=, :relationships=, :slides=
 
-        def initialize
+        def initialize(package)
+          self.package = package
           self.relationships = OpenXml::Parts::Rels.new
           self.slides = []
-          self.layouts = OpenXml::Pptx::Elements::SlideLayoutList.new
           self.masters = OpenXml::Pptx::Elements::SlideMasterIdList.new
         end
 
@@ -27,6 +27,7 @@ module OpenXml
 
         def add_slide(slide)
           self.slides.push(slide)
+          slide.add_to([self, package])
         end
 
         def add_to(ancestors)
@@ -35,9 +36,6 @@ module OpenXml
           parent.add_part "ppt/_rels/presentation.xml.rels", relationships
           parent.add_override "ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
           parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "ppt/presentation.xml"
-          slides.each do |slide|
-            slide.add_to([self])
-          end
         end
 
         def add_part(ancestors, path, part)
@@ -57,7 +55,7 @@ module OpenXml
 
         def add_slide_relationship(type, target)
           relationship = add_relationship(type, target)
-          self.slide_layouts.add_slide(relationship)
+        #  self.slide_layouts.add_slide(relationship)
         end
 
         def slide_size

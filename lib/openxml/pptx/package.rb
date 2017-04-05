@@ -15,12 +15,10 @@ module OpenXml
         rels.add_relationship type, target
       end
 
-      def add_presentation(presentation)
-        self.presentation = presentation
-      end
-
-      def add_slide(slide)
-        presentation.add_slide(self, slide)
+      def initialize(*args)
+        super
+        self.presentation = OpenXml::Pptx::Parts::Presentation.new(self)
+        presentation.add_to(self)
       end
 
       def set_defaults

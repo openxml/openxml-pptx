@@ -15,8 +15,10 @@ module OpenXml
           parent.add_part rest, "slides/slide1.xml", self
           parent.add_part rest, "slides/_rels/slide1.xml.rels", relationships
 
+          layout.add_to(ancestors)
+
           parent.add_slide_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide", "slides/slide1.xml"
-          parent.add_override "ppt/slides/slide1.xml", "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
+          parent.add_override rest, "slides/slide1.xml", "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
         end
 
         def common_slide_data

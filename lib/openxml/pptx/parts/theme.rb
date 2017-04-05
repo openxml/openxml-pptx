@@ -113,13 +113,6 @@ module OpenXml
           XML
         end
         alias :content :read
-
-        private def namespaces
-          {
-            "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "name": "Office Theme",
-          }
-        end
       end
     end
   end

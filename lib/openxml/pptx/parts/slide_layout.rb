@@ -8,12 +8,12 @@ module OpenXml
         attr_accessor :relationships, :master
         private :relationships=, :master=
 
-        def self.defualt_relationships
+        def self.default_relationships
           @default_relationships ||= {}
         end
 
         def self.relationship(type, target)
-          self.defualt_relationships.store(type, target)
+          self.default_relationships.store(type, target)
         end
 
         relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
@@ -23,7 +23,7 @@ module OpenXml
           self.relationships = OpenXml::Parts::Rels.new
           self.master = master
 
-          self.class.defualt_relationships.each_pair do |type, target|
+          self.class.default_relationships.each_pair do |type, target|
             add_relationship type, target
           end
         end
@@ -34,6 +34,9 @@ module OpenXml
 
         def add_to(ancestors)
           parent, *rest = ancestors
+
+          master.add_to(ancestors)
+
           parent.add_part rest, "slideLayouts/slideLayoutBasic.xml", self
           parent.add_part rest, "slideLayouts/_rels/slideLayoutBasic.xml.rels", relationships
           parent.add_override rest, "slideLayouts/slideLayoutBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"

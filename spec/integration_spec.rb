@@ -34,11 +34,9 @@ describe OpenXml::Pptx::Package do
     let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
     let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
     let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
-    let(:presentation) { OpenXml::Pptx::Parts::Presentation.new }
 
     before do
-      presentation.add_slide(slide)
-      subject.add_presentation(presentation)
+      subject.presentation.add_slide(slide)
     end
 
     specify do
