@@ -2,6 +2,8 @@ require "spec_helper"
 require "support/matchers/include_relationship"
 
 RSpec.describe OpenXml::Pptx::Parts::Presentation do
+  let(:subject) { OpenXml::Pptx::Package.new.presentation }
+
   specify do
     parent = double(:parent, add_part: nil, add_override: nil)
 
@@ -32,7 +34,7 @@ RSpec.describe OpenXml::Pptx::Parts::Presentation do
     end
 
     specify do
-      expect(described_class.new).to_not include_relationship(type, target)
+      expect(OpenXml::Pptx::Package.new.presentation).to_not include_relationship(type, target)
     end
   end
 end
