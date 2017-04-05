@@ -30,6 +30,7 @@ module OpenXml
         end
 
         def to_xml(xml)
+          return xml if master_ids.empty?
           xml[namespace].public_send(tag, xml_attributes) {
             master_ids.each do |master_id|
               master_id.to_xml(xml)

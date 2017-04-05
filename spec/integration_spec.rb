@@ -19,10 +19,10 @@ describe OpenXml::Pptx::Package do
     end
 
     specify do
-      expect(entries_of(subject)).to contain_exactly(*entries_of(pptx("minimal")))
+      expect(entries_of(subject)).to contain_exactly(*entries_of(pptx("no_slides")))
     end
 
-    pptx("minimal").parts.each do |part_path, expected_part|
+    pptx("no_slides").parts.each do |part_path, expected_part|
       specify "part at #{part_path} has proper content" do
         expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id")
       end

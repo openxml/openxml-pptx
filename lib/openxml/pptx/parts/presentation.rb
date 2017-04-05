@@ -79,7 +79,6 @@ module OpenXml
               slide_size.to_xml(xml)
               notes_size.to_xml(xml)
               masters.to_xml(xml)
-              slide_layouts.to_xml(xml)
             end
           end
         end
