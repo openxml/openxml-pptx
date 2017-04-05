@@ -15,6 +15,11 @@ module OpenXml
         rels.add_relationship type, target
       end
 
+      # EXTRACT: to openxml-package
+      def has_part?(part)
+        parts.has_value?(part)
+      end
+
       def set_defaults
         super
         self.presentation = OpenXml::Pptx::Parts::Presentation.new(self)

@@ -28,7 +28,11 @@ module OpenXml
 
         def add_slide(slide)
           self.slides.push(slide)
-          slide.add_to([self, package])
+          slide.add_to(self.slides.size, [self, package])
+        end
+
+        def has_part?(part)
+          package.has_part?(part)
         end
 
         def add_to(ancestors)

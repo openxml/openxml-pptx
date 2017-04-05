@@ -44,6 +44,9 @@ module OpenXml
 
         def add_to(ancestors)
           parent, *rest = ancestors
+
+          return if parent.has_part?(self)
+
           parent.add_part rest, "slideMasters/slideMasterBasic.xml", self
           parent.add_part rest, "slideMasters/_rels/slideMasterBasic.xml.rels", relationships
           parent.add_override rest, "slideMasters/slideMasterBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
