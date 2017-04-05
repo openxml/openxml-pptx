@@ -31,11 +31,11 @@ module OpenXml
 
         def to_xml(xml)
           return xml if master_ids.empty?
-          xml[namespace].public_send(tag, xml_attributes) {
+          xml[namespace].public_send(tag, xml_attributes) do
             master_ids.each do |master_id|
               master_id.to_xml(xml)
             end
-          }
+          end
         end
       end
     end

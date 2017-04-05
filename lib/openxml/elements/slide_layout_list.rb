@@ -30,11 +30,11 @@ module OpenXml
         end
 
         def to_xml(xml)
-          xml[namespace].public_send(tag, xml_attributes) {
+          xml[namespace].public_send(tag, xml_attributes) do
             layout_ids.each do |layout_id|
               SlideLayoutId.new(layout_id).to_xml(xml)
             end
-          }
+          end
         end
       end
     end

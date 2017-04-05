@@ -47,12 +47,12 @@ module OpenXml
         end
 
         def to_xml
-          build_standalone_xml { |xml|
+          build_standalone_xml do |xml|
             xml.sld(namespaces) do
               xml.parent.namespace = :p
               common_slide_data.to_xml(xml)
             end
-          }
+          end
         end
 
         private def namespaces

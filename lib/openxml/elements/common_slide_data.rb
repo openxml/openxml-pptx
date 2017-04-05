@@ -14,9 +14,9 @@ module OpenXml
         end
 
         def to_xml(xml)
-          xml[namespace].public_send(tag, xml_attributes) {
+          xml[namespace].public_send(tag, xml_attributes) do
             shape_tree.to_xml(xml)
-          }
+          end
         end
       end
     end

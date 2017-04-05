@@ -16,10 +16,10 @@ module OpenXml
         end
 
         def to_xml(xml)
-          xml[namespace].public_send(tag, xml_attributes) {
+          xml[namespace].public_send(tag, xml_attributes) do
             nonvisual_properties_group_shape.to_xml(xml)
             group_shape_properties.to_xml(xml)
-          }
+          end
         end
       end
     end

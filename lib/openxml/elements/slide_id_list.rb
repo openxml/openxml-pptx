@@ -34,11 +34,11 @@ module OpenXml
 
         def to_xml(xml)
           return xml if slide_ids.empty?
-          xml[namespace].public_send(tag, xml_attributes) {
+          xml[namespace].public_send(tag, xml_attributes) do
             slide_ids.each do |slide_id|
               slide_id.to_xml(xml)
             end
-          }
+          end
         end
       end
     end

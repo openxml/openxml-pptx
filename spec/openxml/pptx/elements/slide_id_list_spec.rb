@@ -20,7 +20,7 @@ RSpec.describe OpenXml::Pptx::Elements::SlideId do
   specify do
     xml = Nokogiri::XML::Builder.new { |xml|
       xml.root("xmlns:p": "pnamespace") do
-        subject.to_xml(xml)
+        xml = subject.to_xml(xml)
       end
     }.to_xml
     expected_output = """
