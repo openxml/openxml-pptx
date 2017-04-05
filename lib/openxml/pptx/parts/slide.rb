@@ -5,9 +5,30 @@ module OpenXml
         attr_accessor :relationships, :id, :layout
         private :relationships=, :id=, :layout=
 
+        def self.default_relationships
+          @default_relationships ||= {}
+        end
+
+        def self.relationship(type, target)
+          self.default_relationships.store(type, target)
+        end
+
+        LAYOUT_SCHEMA =
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        relationship(LAYOUT_SCHEMA,
+                     "../slideLayouts/slideLayoutBasic.xml")
+
         def initialize(layout)
           self.relationships = OpenXml::Parts::Rels.new
           self.layout = layout
+
+          self.class.default_relationships.each_pair do |type, target|
+            add_relationship type, target
+          end
+        end
+
+        def add_relationship(type, target)
+          relationships.add_relationship(type, target)
         end
 
         def add_to(ancestors)
