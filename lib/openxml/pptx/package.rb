@@ -5,22 +5,20 @@ require "openxml/pptx/parts/presentation"
 module OpenXml
   module Pptx
     class Package < OpenXml::Package
-      attr_reader :presentation
-      REL_PRESENTATION = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+      attr_accessor :presentation
 
-      TYPE_PRESENTATION = "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
+      def add_override(part_name, content_type)
+        content_types.add_override "/#{part_name}", content_type
+      end
 
-      content_types do
-        override "/ppt/presentation.xml", TYPE_PRESENTATION
+      def add_relationship(type, target)
+        rels.add_relationship type, target
       end
 
       def set_defaults
         super
-        rels.add_relationship REL_PRESENTATION, "ppt/presentation.xml"
-
-        @presentation = OpenXml::Pptx::Parts::Presentation.new
-
-        add_part "ppt/presentation.xml", presentation
+        self.presentation = OpenXml::Pptx::Parts::Presentation.new(self)
+        presentation.add_to(self)
       end
     end
   end
