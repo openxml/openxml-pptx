@@ -59,6 +59,6 @@ describe OpenXml::Pptx::Package do
   end
 
   def content_of(package, part_path)
-    package.get_part(part_path).content
+    package.get_part(part_path).to_xml.to_s(debug: true)
   end
 end

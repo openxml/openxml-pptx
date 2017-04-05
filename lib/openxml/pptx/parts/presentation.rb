@@ -11,13 +11,14 @@ module OpenXml
   module Pptx
     module Parts
       class Presentation < OpenXml::Part
-        attr_accessor :package, :relationships, :slides, :masters
-        private :package=, :relationships=, :slides=
+        attr_accessor :package, :relationships, :slides, :masters, :slide_id_list
+        private :package=, :relationships=, :slides=, :slide_id_list=
 
         def initialize(package)
           self.package = package
           self.relationships = OpenXml::Parts::Rels.new
           self.slides = []
+          self.slide_id_list = OpenXml::Pptx::Elements::SlideIdList.new
           self.masters = OpenXml::Pptx::Elements::SlideMasterIdList.new
         end
 
@@ -55,7 +56,7 @@ module OpenXml
 
         def add_slide_relationship(type, target)
           relationship = add_relationship(type, target)
-        #  self.slide_layouts.add_slide(relationship)
+          self.slide_id_list.add_slide(relationship)
         end
 
         def slide_size
@@ -76,9 +77,10 @@ module OpenXml
           build_standalone_xml do |xml|
             xml.presentation(namespaces) do
               xml.parent.namespace = :p
+              masters.to_xml(xml)
+              slide_id_list.to_xml(xml)
               slide_size.to_xml(xml)
               notes_size.to_xml(xml)
-              masters.to_xml(xml)
             end
           end
         end

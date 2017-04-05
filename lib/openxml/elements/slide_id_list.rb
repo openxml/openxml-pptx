@@ -1,19 +1,19 @@
 require "openxml/extract/element"
-require "securerandom"
 
 module OpenXml
   module Pptx
     module Elements
       class SlideId < OpenXml::Element
+        MAX_SIZE = 2**31 - 1
         tag :sldId
 
         attribute :rid, displays_as: :id, expects: :string, namespace: :r
-        attribute :id, expects: :string
+        attribute :id, expects: :positive_integer
 
         def initialize(relationship_id)
           super()
-          self.rid = relationship_id
-          self.id = SecureRandom.hex
+          self.rid = relationship_id.to_s
+          self.id = object_id % MAX_SIZE
         end
       end
 
