@@ -81,6 +81,34 @@ describe OpenXml::Pptx::Package do
     end
   end
 
+  context "with two layouts" do
+    let(:theme) { OpenXml::Pptx::Parts::Theme.new }
+    let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
+    let(:layout1) { OpenXml::Pptx::Parts::SlideLayout.new(master, "1") }
+    let(:layout2) { OpenXml::Pptx::Parts::SlideLayout.new(master, "2") }
+    let(:slide1) { OpenXml::Pptx::Parts::Slide.new(layout1) }
+    let(:slide2) { OpenXml::Pptx::Parts::Slide.new(layout2) }
+
+    before do
+      subject.presentation.add_slide(slide1)
+      subject.presentation.add_slide(slide2)
+    end
+
+    specify do
+      expect(subject.content_types).to be_instance_of(OpenXml::Parts::ContentTypes)
+    end
+
+    specify do
+      expect(entries_of(subject)).to contain_exactly(*entries_of(pptx("multiple_layouts")))
+    end
+
+    pptx("multiple_layouts").parts.each do |part_path, expected_part|
+      specify "part at #{part_path} has proper content" do
+        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "id")
+      end
+    end
+  end
+
   def entries_of(package)
     package.parts.keys
   end

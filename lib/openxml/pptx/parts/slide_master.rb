@@ -23,11 +23,6 @@ module OpenXml
         relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
                      "../theme/themeBasic.xml")
 
-        LAYOUT_SCHEMA =
-          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
-        relationship(LAYOUT_SCHEMA,
-                     "../slideLayouts/slideLayoutBasic.xml")
-
         def initialize(theme)
           self.relationships = OpenXml::Parts::Rels.new
           self.theme = theme
@@ -61,13 +56,12 @@ module OpenXml
         end
 
         def slide_layout_list
-          OpenXml::Pptx::Elements::SlideLayoutList.new.tap { |slide_layout_list|
-            relationships.find_all { |relationship|
-              relationship.type == LAYOUT_SCHEMA
-            }.each do |layout_relationship|
-              slide_layout_list.add_layout layout_relationship
-            end
-          }
+          @slide_layout_list ||= OpenXml::Pptx::Elements::SlideLayoutList.new
+        end
+
+        def add_layout_relationship(type, target)
+          relationship = add_relationship(type, "../#{target}")
+          self.slide_layout_list.add_layout(relationship)
         end
 
         def color_map
