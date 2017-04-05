@@ -15,14 +15,10 @@ module OpenXml
         rels.add_relationship type, target
       end
 
-      def initialize(*args)
+      def set_defaults
         super
         self.presentation = OpenXml::Pptx::Parts::Presentation.new(self)
         presentation.add_to(self)
-      end
-
-      def set_defaults
-        super
       end
     end
   end
