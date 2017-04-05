@@ -33,6 +33,7 @@ module OpenXml
         end
 
         def to_xml(xml)
+          return xml if slide_ids.empty?
           xml[namespace].public_send(tag, xml_attributes) {
             slide_ids.each do |slide_id|
               slide_id.to_xml(xml)

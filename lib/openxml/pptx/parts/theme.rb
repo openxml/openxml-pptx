@@ -25,8 +25,8 @@ module OpenXml
           parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme", "theme/themeBasic.xml"
         end
 
-        def read
-       <<~XML
+        def to_xml
+          xml = <<~XML
           <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
           <a:theme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="Office Theme">
             <a:themeElements>
@@ -111,8 +111,11 @@ module OpenXml
             </a:themeElements>
           </a:theme>
           XML
+          def xml.to_s(*args)
+            self
+          end
+          xml
         end
-        alias :content :read
       end
     end
   end
