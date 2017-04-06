@@ -25,7 +25,7 @@ module OpenXml
 
           layout.add_to(ancestors)
 
-          parent.add_slide_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide", "slides/slide#{slide_count}.xml"
+          parent.add_slide_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide", "/ppt/slides/slide#{slide_count}.xml"
           parent.add_override rest, "slides/slide#{slide_count}.xml", "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
         end
 
