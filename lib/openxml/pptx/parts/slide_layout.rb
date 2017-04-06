@@ -5,19 +5,9 @@ module OpenXml
   module Pptx
     module Parts
       class SlideLayout < OpenXml::Part
-        attr_accessor :relationships, :master, :name
-        private :relationships=, :master=, :name=
-
-        def self.default_relationships
-          @default_relationships ||= {}
-        end
-
-        def self.relationship(type, target)
-          self.default_relationships.store(type, target)
-        end
-
-        relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
-                     "../slideMasters/slideMasterBasic.xml")
+        attr_reader :master
+        attr_accessor :relationships, :name
+        private :relationships=, :name=
 
         def initialize(master, name = "Basic")
           self.relationships = OpenXml::Parts::Rels.new
@@ -25,10 +15,11 @@ module OpenXml
           self.name = name
 
           master.add_layout_relationship(relationship_type, relationship_target)
+        end
 
-          self.class.default_relationships.each_pair do |type, target|
-            add_relationship type, target
-          end
+        private def master=(master)
+          @master = master
+          add_relationship master.relationship_type, "../#{master.relationship_target}"
         end
 
         def relationship_type
