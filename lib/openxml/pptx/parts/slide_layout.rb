@@ -17,7 +17,7 @@ module OpenXml
         end
 
         relationship("http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
-                     "../slideMasters/slideMasterBasic.xml")
+                     "/ppt/slideMasters/slideMasterBasic.xml")
 
         def initialize(master, name = "Basic")
           self.relationships = OpenXml::Parts::Rels.new
