@@ -17,7 +17,6 @@ module OpenXml
           self.relationships = OpenXml::Parts::Rels.new
           self.theme = theme
           self.layouts = OpenXml::Pptx::Elements::SlideLayoutList.new
-
         end
 
         private def theme=(theme)
