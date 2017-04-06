@@ -60,8 +60,9 @@ module OpenXml
           @slide_layout_list ||= OpenXml::Pptx::Elements::SlideLayoutList.new
         end
 
-        def add_layout_relationship(type, target)
-          relationship = add_relationship(type, "../#{target}")
+        def add_layout(layout)
+          relationship = add_relationship(layout.relationship_type,
+                                          "../#{layout.relationship_target}")
           self.slide_layout_list.add_layout(relationship)
         end
 

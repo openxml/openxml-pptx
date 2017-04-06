@@ -11,15 +11,14 @@ module OpenXml
 
         def initialize(master, name = "Basic")
           self.relationships = OpenXml::Parts::Rels.new
-          self.master = master
           self.name = name
-
-          master.add_layout_relationship(relationship_type, relationship_target)
+          self.master = master
         end
 
         private def master=(master)
           @master = master
           add_relationship master.relationship_type, "../#{master.relationship_target}"
+          master.add_layout(self)
         end
 
         def relationship_type
