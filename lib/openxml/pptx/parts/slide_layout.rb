@@ -17,8 +17,8 @@ module OpenXml
 
         private def master=(master)
           @master = master
-          add_relationship master.relationship_type, master.relationship_target
-          master.add_layout(self)
+          add_relationship master.relationship
+          master.add_layout self
         end
 
         def relationship_type
@@ -29,14 +29,18 @@ module OpenXml
           "/ppt/slideLayouts/#{part_name}.xml"
         end
 
-        def add_relationship(type, target)
-          relationships.add_relationship(type, target)
+        def relationship
+          OpenXml::Elements::Relationship.new(relationship_type, relationship_target)
+        end
+
+        def add_relationship(relationship)
+          relationships.push relationship
         end
 
         def add_to(ancestors)
           parent, *rest = ancestors
 
-          master.add_to(ancestors)
+          master.add_to ancestors
 
           parent.add_part rest, "slideLayouts/#{part_name}.xml", self
           parent.add_part rest, "slideLayouts/_rels/#{part_name}.xml.rels", relationships

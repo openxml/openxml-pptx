@@ -16,11 +16,11 @@ module OpenXml
 
         private = def layout=(layout)
           @layout = layout
-          add_relationship(LAYOUT_SCHEMA, "/ppt/slideLayouts/#{layout.part_name}.xml")
+          add_relationship(layout.relationship)
         end
 
-        def add_relationship(type, target)
-          relationships.add_relationship(type, target)
+        def add_relationship(relationship)
+          relationships.push(relationship)
         end
 
         def add_to(slide_count, ancestors)
@@ -30,12 +30,19 @@ module OpenXml
 
           layout.add_to(ancestors)
 
-          parent.add_slide_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide", "/ppt/slides/slide#{slide_count}.xml"
+          parent.add_slide_relationship relationship(slide_count)
+
           parent.add_override rest, "slides/slide#{slide_count}.xml", "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
         end
 
         def common_slide_data
           OpenXml::Pptx::Elements::CommonSlideData.new
+        end
+
+        def relationship(slide_count)
+          OpenXml::Elements::Relationship.new(
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide",
+            "/ppt/slides/slide#{slide_count}.xml")
         end
 
         def to_xml

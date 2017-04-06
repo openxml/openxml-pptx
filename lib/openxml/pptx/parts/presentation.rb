@@ -22,8 +22,8 @@ module OpenXml
           self.masters = OpenXml::Pptx::Elements::SlideMasterIdList.new
         end
 
-        def add_relationship(type, target)
-          relationships.add_relationship(type, target)
+        def add_relationship(relationship)
+          relationships.push(relationship)
         end
 
         def add_slide(slide)
@@ -40,7 +40,13 @@ module OpenXml
           parent.add_part "ppt/presentation.xml", self
           parent.add_part "ppt/_rels/presentation.xml.rels", relationships
           parent.add_override "ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
-          parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "/ppt/presentation.xml"
+          parent.add_relationship relationship
+        end
+
+        def relationship
+          @relationship ||= OpenXml::Elements::Relationship.new(
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
+            "/ppt/presentation.xml")
         end
 
         def add_part(ancestors, path, part)
@@ -53,13 +59,13 @@ module OpenXml
           parent.add_override "ppt/#{part_name}", content_type
         end
 
-        def add_master_relationship(type, target)
-          relationship = add_relationship(type, target)
+        def add_master_relationship(relationship)
+          add_relationship(relationship)
           self.masters.add_master(relationship)
         end
 
-        def add_slide_relationship(type, target)
-          relationship = add_relationship(type, target)
+        def add_slide_relationship(relationship)
+          add_relationship(relationship)
           self.slide_id_list.add_slide(relationship)
         end
 

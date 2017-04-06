@@ -11,8 +11,8 @@ module OpenXml
         content_types.add_override "/#{part_name}", content_type
       end
 
-      def add_relationship(type, target)
-        rels.add_relationship type, target
+      def add_relationship(relationship)
+        rels.push relationship
       end
 
       # EXTRACT: to openxml-package
