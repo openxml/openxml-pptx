@@ -22,7 +22,7 @@ module OpenXml
           parent.add_part rest, "theme/themeBasic.xml", self
           parent.add_override rest, "theme/themeBasic.xml", "application/vnd.openxmlformats-officedocument.theme+xml"
 
-          parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme", "theme/themeBasic.xml"
+          parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme", "/ppt/theme/themeBasic.xml"
         end
 
         def relationship_type
