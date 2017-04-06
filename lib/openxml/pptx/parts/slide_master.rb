@@ -23,7 +23,7 @@ module OpenXml
         private def theme=(theme)
           @theme = theme
           add_relationship theme.relationship_type,
-            "../#{theme.relationship_target}"
+            theme.relationship_target
         end
 
         def add_relationship(type, target)
@@ -53,7 +53,7 @@ module OpenXml
         end
 
         def add_layout_relationship(type, target)
-          relationship = add_relationship(type, "../#{target}")
+          relationship = add_relationship(type, target)
           self.slide_layout_list.add_layout(relationship)
         end
 

@@ -36,7 +36,7 @@ module OpenXml
         end
 
         def relationship_target
-          "slideLayouts/#{part_name}.xml"
+          "/ppt/slideLayouts/#{part_name}.xml"
         end
 
         def add_relationship(type, target)

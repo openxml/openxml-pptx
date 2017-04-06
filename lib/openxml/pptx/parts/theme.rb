@@ -31,7 +31,7 @@ module OpenXml
 
 
         def relationship_target
-          "theme/themeBasic.xml"
+          "/ppt/theme/themeBasic.xml"
         end
 
         def to_xml

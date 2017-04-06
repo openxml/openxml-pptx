@@ -2,8 +2,9 @@ module OpenXml
   module Pptx
     module Parts
       class Slide < OpenXml::Part
-        attr_accessor :relationships, :id, :layout
-        private :relationships=, :id=, :layout=
+        attr_reader :layout
+        attr_accessor :relationships, :id
+        private :relationships=, :id=
 
         LAYOUT_SCHEMA =
           "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
@@ -11,7 +12,11 @@ module OpenXml
         def initialize(layout)
           self.relationships = OpenXml::Parts::Rels.new
           self.layout = layout
-          add_relationship(LAYOUT_SCHEMA, "../slideLayouts/#{layout.part_name}.xml")
+        end
+
+        private = def layout=(layout)
+          @layout = layout
+          add_relationship(LAYOUT_SCHEMA, "/ppt/slideLayouts/#{layout.part_name}.xml")
         end
 
         def add_relationship(type, target)
