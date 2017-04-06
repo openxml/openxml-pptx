@@ -25,6 +25,15 @@ module OpenXml
           parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme", "theme/themeBasic.xml"
         end
 
+        def relationship_type
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
+        end
+
+
+        def relationship_target
+          "theme/themeBasic.xml"
+        end
+
         def to_xml
           xml = <<~XML
           <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
