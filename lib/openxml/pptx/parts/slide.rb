@@ -2,8 +2,9 @@ module OpenXml
   module Pptx
     module Parts
       class Slide < OpenXml::Part
-        attr_accessor :relationships, :id, :layout
-        private :relationships=, :id=, :layout=
+        attr_reader :layout
+        attr_accessor :relationships, :id
+        private :relationships=, :id=
 
         LAYOUT_SCHEMA =
           "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
@@ -11,11 +12,15 @@ module OpenXml
         def initialize(layout)
           self.relationships = OpenXml::Parts::Rels.new
           self.layout = layout
-          add_relationship(LAYOUT_SCHEMA, "../slideLayouts/#{layout.part_name}.xml")
         end
 
-        def add_relationship(type, target)
-          relationships.add_relationship(type, target)
+        private = def layout=(layout)
+          @layout = layout
+          add_relationship(layout.relationship)
+        end
+
+        def add_relationship(relationship)
+          relationships.push(relationship)
         end
 
         def add_to(slide_count, ancestors)
@@ -25,12 +30,19 @@ module OpenXml
 
           layout.add_to(ancestors)
 
-          parent.add_slide_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide", "slides/slide#{slide_count}.xml"
+          parent.add_slide_relationship relationship(slide_count)
+
           parent.add_override rest, "slides/slide#{slide_count}.xml", "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
         end
 
         def common_slide_data
           OpenXml::Pptx::Elements::CommonSlideData.new
+        end
+
+        def relationship(slide_count)
+          OpenXml::Elements::Relationship.new(
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide",
+            "/ppt/slides/slide#{slide_count}.xml")
         end
 
         def to_xml

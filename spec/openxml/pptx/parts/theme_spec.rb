@@ -1,23 +1,17 @@
 require "spec_helper"
 require "rspec/matchers"
 require "equivalent-xml"
-require "support/matchers/include_relationship"
 
 RSpec.describe OpenXml::Pptx::Parts::Theme do
   describe "with a relationship" do
-    let(:type) { "type" }
-    let(:target) { "target" }
+    let(:relationship) { :relationship }
 
     before do
-      subject.add_relationship type, target
+      subject.add_relationship relationship
     end
 
     it do
-      is_expected.to include_relationship(type, target)
-    end
-
-    specify do
-      expect(described_class.new).to_not include_relationship(type, target)
+      expect(subject.relationships).to include(relationship)
     end
 
     specify do

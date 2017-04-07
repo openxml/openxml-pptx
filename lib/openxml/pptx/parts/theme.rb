@@ -13,8 +13,8 @@ module OpenXml
           self.relationships = OpenXml::Parts::Rels.new
         end
 
-        def add_relationship(type, target)
-          relationships.add_relationship(type, target)
+        def add_relationship(relationship)
+          relationships.push(relationship)
         end
 
         def add_to(ancestors)
@@ -22,16 +22,20 @@ module OpenXml
           parent.add_part rest, "theme/themeBasic.xml", self
           parent.add_override rest, "theme/themeBasic.xml", "application/vnd.openxmlformats-officedocument.theme+xml"
 
-          parent.add_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme", "theme/themeBasic.xml"
+          parent.add_relationship relationship
         end
 
         def relationship_type
           "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
         end
 
-
         def relationship_target
-          "theme/themeBasic.xml"
+          "/ppt/theme/themeBasic.xml"
+        end
+
+        def relationship
+          @relationship ||= OpenXml::Elements::Relationship.new(relationship_type,
+                                              relationship_target)
         end
 
         def to_xml
