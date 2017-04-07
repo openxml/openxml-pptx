@@ -39,9 +39,17 @@ module OpenXml
           parent.add_part rest, "slideMasters/_rels/slideMasterBasic.xml.rels", relationships
           parent.add_override rest, "slideMasters/slideMasterBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
 
-          parent.add_master_relationship "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster", "slideMasters/slideMasterBasic.xml"
+          parent.add_master_relationship relationship_type, relationship_target
 
           theme.add_to [parent, *rest]
+        end
+
+        def relationship_type
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster"
+        end
+
+        def relationship_target
+          "slideMasters/slideMasterBasic.xml"
         end
 
         def common_slide_data
@@ -52,8 +60,9 @@ module OpenXml
           @slide_layout_list ||= OpenXml::Pptx::Elements::SlideLayoutList.new
         end
 
-        def add_layout_relationship(type, target)
-          relationship = add_relationship(type, "../#{target}")
+        def add_layout(layout)
+          relationship = add_relationship(layout.relationship_type,
+                                          "../#{layout.relationship_target}")
           self.slide_layout_list.add_layout(relationship)
         end
 
