@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: git://github.com/openxml/openxml-package.git
-  revision: f7b38fef160d393d34c15614b68b0574c068a9cc
+  revision: 8502885d2872be100bd5fdba8789360a3cf48dcb
   branch: master
   specs:
     openxml-package (0.2.8)
