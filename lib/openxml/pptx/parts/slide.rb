@@ -1,10 +1,12 @@
+require "openxml/shapes/text"
+
 module OpenXml
   module Pptx
     module Parts
       class Slide < OpenXml::Part
         attr_reader :layout
-        attr_accessor :relationships, :id
-        private :relationships=, :id=
+        attr_accessor :relationships, :id, :shape
+        private :relationships=, :id=, :shape=
 
         LAYOUT_SCHEMA =
           "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
@@ -36,7 +38,7 @@ module OpenXml
         end
 
         def common_slide_data
-          OpenXml::Pptx::Elements::CommonSlideData.new
+          @common_slide_data ||= OpenXml::Pptx::Elements::CommonSlideData.new
         end
 
         def relationship(slide_count)
@@ -52,6 +54,10 @@ module OpenXml
               common_slide_data.to_xml(xml)
             end
           end
+        end
+
+        def add_text(text)
+          common_slide_data.add_shape OpenXml::Shapes::Text.new(text)
         end
 
         private def namespaces
