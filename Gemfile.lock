@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/openxml/openxml-drawingml.git
-  revision: 570f197919a2a9ea0e8b7fe835238be056864132
+  revision: f5b93460bf1c94b0881f6b220e914c5a59d84dbd
   branch: master
   specs:
     openxml-drawingml (0.1.0)

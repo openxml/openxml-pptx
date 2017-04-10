@@ -1,7 +1,6 @@
 require "spec_helper"
-require "openxml/elements/slide_id_list"
-require "rspec/matchers"
-require "equivalent-xml"
+require "support/matchers/generate_tag"
+require "openxml/pptx/elements/slide_id_list"
 require "securerandom"
 
 RSpec.describe OpenXml::Pptx::Elements::SlideId do
@@ -17,20 +16,10 @@ RSpec.describe OpenXml::Pptx::Elements::SlideId do
     expect(subject.id).to_not eql(relationship_id)
   end
 
-  specify do
-    xml = Nokogiri::XML::Builder.new { |xml|
-      xml.root("xmlns:p": "pnamespace") do
-        xml = subject.to_xml(xml)
-      end
-    }.to_xml
+  it do
     expected_output = """
     <p:sldId id=\"#{subject.id}\" r:id=\"#{subject.rid}\"/>
     """
-    expect(isolate_tag(xml)).to be_equivalent_to(expected_output)
-  end
-
-  def isolate_tag(xml)
-    /<\?xml\sversion="1.0"\?>\n<root (?:xmlns:\w+=".+?".?)+>\n\s+([^\s].+)\n<\/root>/m =~ xml
-    $1
+    is_expected.to generate_tag(expected_output)
   end
 end

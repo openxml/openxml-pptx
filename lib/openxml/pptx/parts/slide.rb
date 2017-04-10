@@ -1,3 +1,5 @@
+require "openxml/shapes/text"
+
 module OpenXml
   module Pptx
     module Parts
@@ -36,7 +38,7 @@ module OpenXml
         end
 
         def common_slide_data
-          OpenXml::Pptx::Elements::CommonSlideData.new
+          @common_slide_data ||= OpenXml::Pptx::Elements::CommonSlideData.new
         end
 
         def relationship(slide_count)
@@ -52,6 +54,10 @@ module OpenXml
               common_slide_data.to_xml(xml)
             end
           end
+        end
+
+        def add_shape(shape)
+          common_slide_data.add_shape shape
         end
 
         private def namespaces

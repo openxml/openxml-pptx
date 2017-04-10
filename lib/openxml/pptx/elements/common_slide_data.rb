@@ -1,5 +1,5 @@
 require "openxml/extract/element"
-require "openxml/elements/shape_tree"
+require "openxml/pptx/elements/shape_tree"
 
 module OpenXml
   module Pptx
@@ -10,7 +10,11 @@ module OpenXml
         attribute :name
 
         def shape_tree
-          ShapeTree.new
+          @shape_tree ||= ShapeTree.new
+        end
+
+        def add_shape(shape)
+          shape_tree.add_shape(shape)
         end
 
         def to_xml(xml)
