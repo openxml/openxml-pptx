@@ -5,8 +5,8 @@ module OpenXml
     module Parts
       class Slide < OpenXml::Part
         attr_reader :layout
-        attr_accessor :relationships, :id
-        private :relationships=, :id=
+        attr_accessor :relationships, :id, :shapes
+        private :relationships=, :id=, :shapes=
 
         LAYOUT_SCHEMA =
           "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
@@ -14,6 +14,7 @@ module OpenXml
         def initialize(layout)
           self.relationships = OpenXml::Parts::Rels.new
           self.layout = layout
+          self.shapes = []
         end
 
         private = def layout=(layout)
@@ -35,6 +36,20 @@ module OpenXml
           parent.add_slide_relationship relationship(slide_count)
 
           parent.add_override rest, "slides/slide#{slide_count}.xml", "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
+
+          shapes.each do |shape|
+            shape.add_to([self, *ancestors])
+          end
+        end
+
+        def add_part(ancestors, path, part)
+          parent, *rest = ancestors
+          parent.add_part rest, path, part
+        end
+
+        def add_default(ancestors, extension, type)
+          parent, *rest = ancestors
+          parent.add_default rest, extension, type
         end
 
         def common_slide_data
@@ -57,6 +72,7 @@ module OpenXml
         end
 
         def add_shape(shape)
+          shapes.push shape
           common_slide_data.add_shape shape
         end
 

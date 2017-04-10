@@ -7,7 +7,7 @@ module OpenXml
       InvalidBoundsError = Class.new(StandardError)
 
       def initialize(x, y, cx, cy)
-        fail InvalidBoundsError if y > cy || x > cx
+        fail InvalidBoundsError if cy.negative? || cx.negative?
         self.x = x
         self.y = y
         self.cx = cx

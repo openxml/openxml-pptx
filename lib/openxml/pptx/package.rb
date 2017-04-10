@@ -11,6 +11,10 @@ module OpenXml
         content_types.add_override "/#{part_name}", content_type
       end
 
+      def add_default(extension, type)
+        content_types.add_default extension, type
+      end
+
       def add_relationship(relationship)
         rels.push relationship
       end
