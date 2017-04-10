@@ -5,8 +5,8 @@ module OpenXml
     module Parts
       class Slide < OpenXml::Part
         attr_reader :layout
-        attr_accessor :relationships, :id, :shape
-        private :relationships=, :id=, :shape=
+        attr_accessor :relationships, :id
+        private :relationships=, :id=
 
         LAYOUT_SCHEMA =
           "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
@@ -56,8 +56,8 @@ module OpenXml
           end
         end
 
-        def add_text(text)
-          common_slide_data.add_shape OpenXml::Shapes::Text.new(text)
+        def add_shape(shape)
+          common_slide_data.add_shape shape
         end
 
         private def namespaces

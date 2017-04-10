@@ -114,9 +114,10 @@ describe OpenXml::Pptx::Package do
     let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
     let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
     let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
+    let(:text) { OpenXml::Shapes::Text.new("Hello World") }
 
     before do
-      slide.add_text("Hello World")
+      slide.add_shape text
       subject.presentation.add_slide(slide)
     end
 

@@ -27,8 +27,10 @@ RSpec.describe OpenXml::Pptx::Parts::Slide do
   end
 
   describe "with text" do
+    let(:text) { OpenXml::Shapes::Text.new("Hello World") }
+
     before do
-      subject.add_text("Hello World")
+      subject.add_shape(text)
     end
 
     specify do
