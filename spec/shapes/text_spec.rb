@@ -16,7 +16,7 @@ RSpec.describe OpenXml::Shapes::Text do
       expected_output = """
         <p:sp>
           <p:nvSpPr>
-            <p:cNvPr id='#{subject.object_id}' name='TextBox 1'/>
+            <p:cNvPr id='#{subject.object_id}' name='TextBox'/>
             <p:cNvSpPr/>
             <p:nvPr/>
           </p:nvSpPr>

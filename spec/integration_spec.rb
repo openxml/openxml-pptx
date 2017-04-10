@@ -2,6 +2,7 @@ require "spec_helper"
 require "rspec/matchers"
 require "equivalent-xml"
 require "openxml/pptx/parts/slide"
+require "openxml/shapes/bounds"
 
 describe OpenXml::Pptx::Package do
   def self.pptx(pptx_name)
@@ -132,11 +133,41 @@ describe OpenXml::Pptx::Package do
 
     pptx("text_slide").parts.each do |part_path, expected_part|
       specify "part at #{part_path} has proper content" do
-        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "id")
+        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "id", "name")
       end
     end
   end
 
+  context "with a slide with two text elemetns" do
+    let(:theme) { OpenXml::Pptx::Parts::Theme.new }
+    let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
+    let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
+    let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
+    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332)}
+    let(:text) { OpenXml::Shapes::Text.new("Hello World", bounds) }
+    let(:bounds2) { OpenXml::Shapes::Bounds.new(87682, 369332, 1377863, 369332)}
+    let(:text2) { OpenXml::Shapes::Text.new("Bye World", bounds2) }
+
+    before do
+      slide.add_shape text
+      slide.add_shape text2
+      subject.presentation.add_slide(slide)
+    end
+
+    specify do
+      expect(subject.content_types).to be_instance_of(OpenXml::Parts::ContentTypes)
+    end
+
+    specify do
+      expect(entries_of(subject)).to contain_exactly(*entries_of(pptx("multi_text_slide")))
+    end
+
+    pptx("multi_text_slide").parts.each do |part_path, expected_part|
+      specify "part at #{part_path} has proper content" do
+        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "id", "name")
+      end
+    end
+  end
   def entries_of(package)
     package.parts.keys
   end
