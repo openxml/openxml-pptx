@@ -29,6 +29,27 @@
           </a:p>
         </p:txBody>
       </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="3" name="TextBox"/>
+          <p:cNvSpPr/>
+          <p:nvPr/>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="87682" y="369332"/>
+            <a:ext cx="1377863" cy="369332"/>
+          </a:xfrm>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:p>
+            <a:r>
+              <a:t>Bye World</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
     </p:spTree>
   </p:cSld>
 </p:sld>

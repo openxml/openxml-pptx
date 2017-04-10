@@ -8,9 +8,6 @@ module OpenXml
         namespace :p
         tag :spTree
 
-        attr_accessor :shape
-        private :shape=
-
         def nonvisual_properties_group_shape
           NonvisualPropertiesGroupShape.new
         end
@@ -23,12 +20,18 @@ module OpenXml
           xml[namespace].public_send(tag, xml_attributes) do
             nonvisual_properties_group_shape.to_xml(xml)
             group_shape_properties.to_xml(xml)
-            shape.to_xml(xml) if shape
+            shapes.each do |shape|
+              shape.to_xml(xml)
+            end
           end
         end
 
         def add_shape(shape)
-          self.shape = shape
+          self.shapes.push(shape)
+        end
+
+        def shapes
+          @shapes ||= []
         end
       end
     end

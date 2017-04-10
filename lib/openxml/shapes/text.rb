@@ -24,7 +24,7 @@ module OpenXml
         @nonvisual_shape_property ||= OpenXml::Pptx::Elements::ShapeNonVisual.new.tap {|nv_shape_property|
           nv_shape_property << OpenXml::Pptx::Elements::NonvisualDrawingProperties.new.tap { |nvdp|
             nvdp.id = object_id
-            nvdp.name = "TextBox 1"
+            nvdp.name = "TextBox"
           }
           nv_shape_property << OpenXml::Pptx::Elements::NonvisualShapeDrawingProperties.new
           nv_shape_property << OpenXml::Pptx::Elements::NonvisualProperties.new
