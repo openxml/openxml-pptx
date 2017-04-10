@@ -138,7 +138,7 @@ describe OpenXml::Pptx::Package do
     end
   end
 
-  context "with a slide with two text elemetns" do
+  context "with a slide with two text elements" do
     let(:theme) { OpenXml::Pptx::Parts::Theme.new }
     let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
     let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
