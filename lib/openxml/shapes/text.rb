@@ -12,11 +12,12 @@ require "openxml/pptx/elements/nonvisual_properties"
 module OpenXml
   module Shapes
     class Text
-      attr_accessor :text
-      private :text=
+      attr_accessor :text, :bounds
+      private :text=, :bounds=
 
-      def initialize(text)
+      def initialize(text, bounds)
         self.text = text
+        self.bounds = bounds
       end
 
       def nonvisual_shape_property
@@ -33,14 +34,7 @@ module OpenXml
       def shape_property
         @shape_property = OpenXml::Pptx::Elements::ShapeProperties.new.tap { |sp|
           sp << OpenXml::DrawingML::Elements::TransformEffect.new.tap { |effect|
-            effect << OpenXml::DrawingML::Elements::Offset.new.tap { |offset|
-              offset.x = 0
-              offset.y = 0
-            }
-            effect << OpenXml::DrawingML::Elements::Extension.new.tap { |extension|
-              extension.x = 1465545
-              extension.y = 369332
-            }
+            effect << bounds
           }
         }
       end

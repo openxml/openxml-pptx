@@ -114,7 +114,8 @@ describe OpenXml::Pptx::Package do
     let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
     let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
     let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
-    let(:text) { OpenXml::Shapes::Text.new("Hello World") }
+    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332)}
+    let(:text) { OpenXml::Shapes::Text.new("Hello World", bounds) }
 
     before do
       slide.add_shape text

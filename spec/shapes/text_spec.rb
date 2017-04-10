@@ -1,10 +1,12 @@
 require "spec_helper"
 require "support/matchers/generate_tag"
 require "openxml/shapes/text"
+require "openxml/shapes/bounds"
 
 RSpec.describe OpenXml::Shapes::Text do
   describe "with 'Hello World' inside" do
-    subject { described_class.new "Hello World" }
+    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465546, 369333)}
+    subject { described_class.new("Hello World", bounds) }
 
     specify do
       expect(subject.text).to eql("Hello World")
@@ -21,7 +23,7 @@ RSpec.describe OpenXml::Shapes::Text do
           <p:spPr>
             <a:xfrm>
               <a:off x='0' y='0'/>
-              <a:ext cx='1465545' cy='369332'/>
+              <a:ext cx='1465546' cy='369333'/>
             </a:xfrm>
           </p:spPr>
           <p:txBody>
