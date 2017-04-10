@@ -1,9 +1,9 @@
 # frozen_string_literals: true
-require "openxml/elements/notes_size"
-require "openxml/elements/slide_size"
-require "openxml/elements/common_slide_data"
-require "openxml/elements/color_map"
-require "openxml/elements/slide_layout_list"
+require "openxml/pptx/elements/notes_size"
+require "openxml/pptx/elements/slide_size"
+require "openxml/pptx/elements/common_slide_data"
+require "openxml/pptx/elements/color_map"
+require "openxml/pptx/elements/slide_layout_list"
 
 module OpenXml
   module Pptx

@@ -1,5 +1,5 @@
-require "openxml/elements/nonvisual_properties_group_shape"
-require "openxml/elements/group_shape_properties"
+require "openxml/pptx/elements/nonvisual_properties_group_shape"
+require "openxml/pptx/elements/group_shape_properties"
 
 module OpenXml
   module Pptx

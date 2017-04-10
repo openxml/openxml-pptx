@@ -1,13 +1,13 @@
-require "openxml/elements/shape_non_visual"
-require "openxml/elements/text_body"
+require "openxml/pptx/elements/shape_non_visual"
+require "openxml/pptx/elements/text_body"
 require "openxml/elements/paragraph"
 require "openxml/elements/run"
 require "openxml/elements/text"
 require "openxml/elements/body_properties"
-require "openxml/elements/shape_properties"
-require "openxml/elements/nonvisual_drawing_properties"
-require "openxml/elements/nonvisual_shape_drawing_properties"
-require "openxml/elements/nonvisual_properties"
+require "openxml/pptx/elements/shape_properties"
+require "openxml/pptx/elements/nonvisual_drawing_properties"
+require "openxml/pptx/elements/nonvisual_shape_drawing_properties"
+require "openxml/pptx/elements/nonvisual_properties"
 
 module OpenXml
   module Shapes
@@ -20,7 +20,7 @@ module OpenXml
       end
 
       def nonvisual_shape_property
-        @nonvisual_shape_property ||= OpenXml::Elements::ShapeNonVisual.new.tap {|nv_shape_property|
+        @nonvisual_shape_property ||= OpenXml::Pptx::Elements::ShapeNonVisual.new.tap {|nv_shape_property|
           nv_shape_property << OpenXml::Pptx::Elements::NonvisualDrawingProperties.new.tap { |nvdp|
             nvdp.id = object_id
             nvdp.name = "TextBox 1"
@@ -31,7 +31,7 @@ module OpenXml
       end
 
       def shape_property
-        @shape_property = OpenXml::Elements::ShapeProperties.new.tap { |sp|
+        @shape_property = OpenXml::Pptx::Elements::ShapeProperties.new.tap { |sp|
           sp << OpenXml::DrawingML::Elements::TransformEffect.new.tap { |effect|
             effect << OpenXml::DrawingML::Elements::Offset.new.tap { |offset|
               offset.x = 0
@@ -46,7 +46,7 @@ module OpenXml
       end
 
       def text_body
-        @text_body ||= OpenXml::Elements::TextBody.new.tap { |text_body|
+        @text_body ||= OpenXml::Pptx::Elements::TextBody.new.tap { |text_body|
           text_body << OpenXml::Elements::BodyProperties.new
           text_body << OpenXml::Elements::Paragraph.new.tap { |paragraph|
             paragraph << OpenXml::Elements::Run.new.tap { |run|

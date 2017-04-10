@@ -1,7 +1,7 @@
 require "openxml/extract/element"
-require "openxml/elements/nonvisual_properties"
-require "openxml/elements/nonvisual_drawing_properties"
-require "openxml/elements/nonvisual_group_shape_drawing_properties"
+require "openxml/pptx/elements/nonvisual_properties"
+require "openxml/pptx/elements/nonvisual_drawing_properties"
+require "openxml/pptx/elements/nonvisual_group_shape_drawing_properties"
 
 module OpenXml
   module Pptx

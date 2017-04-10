@@ -1,6 +1,6 @@
 require "spec_helper"
 require "support/matchers/generate_tag"
-require "openxml/elements/slide_id_list"
+require "openxml/pptx/elements/slide_id_list"
 require "securerandom"
 
 RSpec.describe OpenXml::Pptx::Elements::SlideId do

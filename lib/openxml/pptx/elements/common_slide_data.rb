@@ -1,5 +1,5 @@
 require "openxml/extract/element"
-require "openxml/elements/shape_tree"
+require "openxml/pptx/elements/shape_tree"
 
 module OpenXml
   module Pptx

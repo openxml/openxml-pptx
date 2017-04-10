@@ -1,5 +1,5 @@
 # frozen_string_literals: true
-require "openxml/elements/common_slide_data"
+require "openxml/pptx/elements/common_slide_data"
 
 module OpenXml
   module Pptx
