@@ -59,6 +59,11 @@ module OpenXml
           parent.add_override "ppt/#{part_name}", content_type
         end
 
+        def add_default(ancestors, extension, type)
+          parent, *rest = ancestors
+          parent.add_default extension, type
+        end
+
         def add_master_relationship(relationship)
           add_relationship(relationship)
           self.masters.add_master(relationship)

@@ -16,15 +16,15 @@ RSpec.describe OpenXml::Shapes::Bounds do
     end
   end
 
-  describe "with a bottom bound that is above the top" do
+  describe "with a bottom bound that is left of the left hand side" do
     specify do
-      expect{ described_class.new(0, 1, 2, 0) }.to raise_error(OpenXml::Shapes::Bounds::InvalidBoundsError)
+      expect{ described_class.new(0, 1, -2, 0) }.to raise_error(OpenXml::Shapes::Bounds::InvalidBoundsError)
     end
   end
 
-  describe "with a bottom bound that is above the top" do
+  describe "with a bottom bound that is above the top side" do
     specify do
-      expect{ described_class.new(1, 0, 0, 2) }.to raise_error(OpenXml::Shapes::Bounds::InvalidBoundsError)
+      expect{ described_class.new(1, 0, 0, -2) }.to raise_error(OpenXml::Shapes::Bounds::InvalidBoundsError)
     end
   end
 end

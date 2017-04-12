@@ -20,6 +20,17 @@ module OpenXml
         self.bounds = bounds
       end
 
+      def add_to(parent)
+      end
+
+      def to_xml(xml)
+        Shape.new.tap { |shape|
+          shape << nonvisual_shape_property
+          shape << shape_property
+          shape << text_body
+        }.to_xml(xml)
+      end
+
       def nonvisual_shape_property
         @nonvisual_shape_property ||= OpenXml::Pptx::Elements::ShapeNonVisual.new.tap {|nv_shape_property|
           nv_shape_property << OpenXml::Pptx::Elements::NonvisualDrawingProperties.new.tap { |nvdp|
@@ -48,14 +59,6 @@ module OpenXml
             }
           }
         }
-      end
-
-      def to_xml(xml)
-        Shape.new.tap { |shape|
-          shape << nonvisual_shape_property
-          shape << shape_property
-          shape << text_body
-        }.to_xml(xml)
       end
 
       class Shape < OpenXml::Container
