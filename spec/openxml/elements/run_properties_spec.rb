@@ -104,11 +104,11 @@ RSpec.describe OpenXml::Elements::RunProperties do
     end
 
     failure_message do
-      "expected all values to be accepted, but #{@failures} were not accepted"
+      "expected all values to be accepted, but #{@failures} were rejected"
     end
 
     failure_message_when_negated do
-      "expected all values to not be accepted, but #{@failures} were accepted"
+      "expected all values to be rejected, but #{@failures} were accepted"
     end
 
     chain :in, :values
