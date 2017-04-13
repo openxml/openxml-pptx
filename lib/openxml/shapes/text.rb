@@ -4,6 +4,7 @@ require "openxml/elements/paragraph"
 require "openxml/elements/run"
 require "openxml/elements/text"
 require "openxml/elements/body_properties"
+require "openxml/elements/run_properties"
 require "openxml/pptx/elements/shape_properties"
 require "openxml/pptx/elements/nonvisual_drawing_properties"
 require "openxml/pptx/elements/nonvisual_shape_drawing_properties"
@@ -12,15 +13,26 @@ require "openxml/pptx/elements/nonvisual_properties"
 module OpenXml
   module Shapes
     class Text
+      attr_writer :boolean_properties, :value_properties
       attr_accessor :text, :bounds
       private :text=, :bounds=
 
-      def initialize(text, bounds)
+      def initialize(text, bounds, *boolean_properties, **value_properties)
         self.text = text
         self.bounds = bounds
+        self.boolean_properties = boolean_properties
+        self.value_properties = value_properties
       end
 
       def add_to(parent)
+      end
+
+      def boolean_properties
+        @boolean_properties.clone
+      end
+
+      def value_properties
+        @value_properties.clone
       end
 
       def to_xml(xml)
@@ -55,6 +67,7 @@ module OpenXml
           text_body << OpenXml::Elements::BodyProperties.new
           text_body << OpenXml::Elements::Paragraph.new.tap { |paragraph|
             paragraph << OpenXml::Elements::Run.new.tap { |run|
+              run << OpenXml::Elements::RunProperties.new(*boolean_properties, **value_properties)
               run << OpenXml::Elements::Text.new(text)
             }
           }
