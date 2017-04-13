@@ -16,6 +16,18 @@ RSpec.describe OpenXml::Elements::RunProperties do
     end
   end
 
+  context "with font color" do
+    subject { described_class.new(font_color: "929292") }
+    it do
+      is_expected.to generate_tag(<<~XML
+                                  <a:rPr>
+                                    <a:srgbClr val='929292'/>
+                                  </a:Pr>
+                                 XML
+                                 )
+    end
+  end
+
   it do
     is_expected.to have_boolean_attribute(:italic)
   end

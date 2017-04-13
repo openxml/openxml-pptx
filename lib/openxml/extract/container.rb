@@ -19,5 +19,9 @@ module OpenXml
         children.each { |child| child.to_xml(xml) }
       }
     end
+
+    def render?
+      super || children.any?
+    end
   end
 end

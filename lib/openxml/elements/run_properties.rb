@@ -1,6 +1,8 @@
+require "openxml/elements/rgb_color"
+
 module OpenXml
   module Elements
-    class RunProperties < OpenXml::Element
+    class RunProperties < OpenXml::Container
       namespace :a
       tag :rPr
 
@@ -30,6 +32,8 @@ module OpenXml
       ]
 
       def initialize(*boolean_properties, **value_properties)
+        super()
+
         boolean_properties.each do |property|
           public_send("#{property}=", true)
         end
@@ -37,6 +41,10 @@ module OpenXml
         value_properties.each do |property, value|
           public_send("#{property}=", value)
         end
+      end
+
+      def font_color=(color)
+        self.push(OpenXml::Elements::RGBColor.new(color))
       end
 
       def to_xml(xml)
