@@ -9,10 +9,45 @@ RSpec.describe OpenXml::Elements::RunProperties do
     end
   end
 
+  it do
+    is_expected.to only_allow_initial_setting_of(:font_color)
+  end
+
+  it do
+    is_expected.to only_allow_initial_setting_of(:typeface)
+  end
+
   context "with properties" do
     subject { described_class.new(:italic, size: 100) }
+
     it do
       is_expected.to generate_tag("<a:rPr i='true' sz='100'/>")
+    end
+  end
+
+  context "with font color" do
+    subject { described_class.new(font_color: "929292") }
+
+    it do
+      is_expected.to generate_tag(<<~XML
+                                  <a:rPr>
+                                    <a:srgbClr val='929292'/>
+                                  </a:Pr>
+                                 XML
+                                 )
+    end
+  end
+
+  context "with typeface" do
+    subject { described_class.new(typeface: "Arial") }
+
+    it do
+      is_expected.to generate_tag(<<~XML
+                                  <a:rPr>
+                                    <a:latin typeface='Arial'/>
+                                  </a:Pr>
+                                 XML
+                                 )
     end
   end
 
@@ -117,4 +152,11 @@ RSpec.describe OpenXml::Elements::RunProperties do
       @values = [range.first, range.last]
     end
   end
+
+  matcher :only_allow_initial_setting_of do |property|
+    match do
+      expect{subject.public_send("#{property}=", "a")}.to raise_error(NoMethodError, /private method/)
+    end
+  end
+
 end
