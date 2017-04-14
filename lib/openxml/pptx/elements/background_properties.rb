@@ -18,10 +18,6 @@ module OpenXml
           super if render?
         end
 
-        def render?
-          super || children.any?
-        end
-
         private def color=(color)
           return if color.nil?
           self.push(
