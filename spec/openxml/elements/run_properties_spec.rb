@@ -28,6 +28,18 @@ RSpec.describe OpenXml::Elements::RunProperties do
     end
   end
 
+  context "with typeface" do
+    subject { described_class.new(typeface: "Arial") }
+    it do
+      is_expected.to generate_tag(<<~XML
+                                  <a:rPr>
+                                    <a:latin typeface='Arial'/>
+                                  </a:Pr>
+                                 XML
+                                 )
+    end
+  end
+
   it do
     is_expected.to have_boolean_attribute(:italic)
   end

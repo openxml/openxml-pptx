@@ -1,4 +1,5 @@
 require "openxml/elements/rgb_color"
+require "openxml/elements/latin"
 
 module OpenXml
   module Elements
@@ -45,6 +46,10 @@ module OpenXml
 
       def font_color=(color)
         self.push(OpenXml::Elements::RGBColor.new(color))
+      end
+
+      def typeface=(typeface)
+        self.push(OpenXml::Elements::Latin.new(typeface))
       end
 
       def to_xml(xml)
