@@ -76,6 +76,10 @@ module OpenXml
           common_slide_data.add_shape shape
         end
 
+        def set_background(backgorund)
+          common_slide_data.add_data backgorund
+        end
+
         private def namespaces
           {
             "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
