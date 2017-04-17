@@ -1,10 +1,10 @@
-require "openxml/extract/element"
+require "openxml/extract/container"
 require "openxml/pptx/elements/shape_tree"
 
 module OpenXml
   module Pptx
     module Elements
-      class CommonSlideData < OpenXml::Element
+      class CommonSlideData < OpenXml::Container
         tag :cSld
 
         attribute :name
@@ -17,10 +17,13 @@ module OpenXml
           shape_tree.add_shape(shape)
         end
 
+        def add_data(data)
+          push(data)
+        end
+
         def to_xml(xml)
-          xml[namespace].public_send(tag, xml_attributes) do
-            shape_tree.to_xml(xml)
-          end
+          push(shape_tree)
+          super
         end
       end
     end

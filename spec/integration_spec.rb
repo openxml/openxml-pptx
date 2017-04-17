@@ -4,6 +4,7 @@ require "equivalent-xml"
 require "openxml/pptx/parts/slide"
 require "openxml/shapes/bounds"
 require "openxml/shapes/image"
+require "openxml/shapes/background"
 
 describe OpenXml::Pptx::Package do
   def self.pptx(pptx_name)
@@ -50,6 +51,33 @@ describe OpenXml::Pptx::Package do
     end
 
     pptx("empty_slide").parts.each do |part_path, expected_part|
+      specify "part at #{part_path} has proper content" do
+        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "id")
+      end
+    end
+  end
+
+  context "with a single color slide" do
+    let(:theme) { OpenXml::Pptx::Parts::Theme.new }
+    let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
+    let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
+    let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
+    let(:background) { OpenXml::Shapes::Background.new("00B050") }
+
+    before do
+      slide.set_background(background)
+      subject.presentation.add_slide(slide)
+    end
+
+    specify do
+      expect(subject.content_types).to be_instance_of(OpenXml::Parts::ContentTypes)
+    end
+
+    specify do
+      expect(entries_of(subject)).to contain_exactly(*entries_of(pptx("bg_slide")))
+    end
+
+    pptx("bg_slide").parts.each do |part_path, expected_part|
       specify "part at #{part_path} has proper content" do
         expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "id")
       end
@@ -202,6 +230,7 @@ describe OpenXml::Pptx::Package do
       end
     end
   end
+
   def entries_of(package)
     package.parts.keys
   end
