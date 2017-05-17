@@ -14,11 +14,11 @@ module OpenXml
   module Shapes
     class Text
       attr_writer :boolean_properties, :value_properties
-      attr_accessor :text, :bounds
-      private :text=, :bounds=
+      attr_accessor :text_body, :bounds
+      private :text_body=, :bounds=
 
-      def initialize(text, bounds, *boolean_properties, **value_properties)
-        self.text = text
+      def initialize(text_body, bounds, *boolean_properties, **value_properties)
+        self.text_body = text_body
         self.bounds = bounds
         self.boolean_properties = boolean_properties
         self.value_properties = value_properties
@@ -58,18 +58,6 @@ module OpenXml
         @shape_property = OpenXml::Pptx::Elements::ShapeProperties.new.tap { |sp|
           sp << OpenXml::DrawingML::Elements::TransformEffect.new.tap { |effect|
             effect << bounds
-          }
-        }
-      end
-
-      def text_body
-        @text_body ||= OpenXml::Pptx::Elements::TextBody.new.tap { |text_body|
-          text_body << OpenXml::Elements::BodyProperties.new
-          text_body << OpenXml::Elements::Paragraph.new.tap { |paragraph|
-            paragraph << OpenXml::Elements::Run.new.tap { |run|
-              run << OpenXml::Elements::RunProperties.new(*boolean_properties, **value_properties)
-              run << OpenXml::Elements::Text.new(text)
-            }
           }
         }
       end

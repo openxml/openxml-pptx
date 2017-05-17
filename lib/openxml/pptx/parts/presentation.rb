@@ -76,8 +76,8 @@ module OpenXml
 
         def slide_size
           OpenXml::Pptx::Elements::SlideSize.new.tap do |size|
-            size.cx = 12192000
-            size.cy = 6858000
+            size.cx = 13004800
+            size.cy = 9753600
           end
         end
 
