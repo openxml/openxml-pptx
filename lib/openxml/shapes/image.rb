@@ -53,7 +53,7 @@ module OpenXml
           OpenXml::Pptx::Elements::NonVisualPictureProperties.new.tap { |nv_pic_property|
           nv_pic_property <<
           OpenXml::Pptx::Elements::NonvisualDrawingProperties.new.tap { |nvdp|
-            nvdp.id = object_id
+            nvdp.id = object_id % OpenXml::Pptx::MAX_ID_SIZE
             nvdp.name = "Picture"
           }
           nv_pic_property << OpenXml::Pptx::Elements::NonVisualPictrueDrawingProperties.new

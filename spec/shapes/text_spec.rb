@@ -18,7 +18,7 @@ RSpec.describe OpenXml::Shapes::Text do
       expected_output = """
         <p:sp>
           <p:nvSpPr>
-            <p:cNvPr id='#{subject.object_id}' name='TextBox'/>
+            <p:cNvPr id='#{subject.object_id % OpenXml::Pptx::MAX_ID_SIZE}' name='TextBox'/>
             <p:cNvSpPr/>
             <p:nvPr/>
           </p:nvSpPr>
@@ -50,7 +50,7 @@ RSpec.describe OpenXml::Shapes::Text do
       expected_output = """
         <p:sp>
           <p:nvSpPr>
-            <p:cNvPr id='#{subject.object_id}' name='TextBox'/>
+            <p:cNvPr id='#{subject.object_id % OpenXml::Pptx::MAX_ID_SIZE}' name='TextBox'/>
             <p:cNvSpPr/>
             <p:nvPr/>
           </p:nvSpPr>
@@ -83,7 +83,7 @@ RSpec.describe OpenXml::Shapes::Text do
       expected_output = """
         <p:sp>
           <p:nvSpPr>
-            <p:cNvPr id='#{subject.object_id}' name='TextBox'/>
+            <p:cNvPr id='#{subject.object_id % OpenXml::Pptx::MAX_ID_SIZE}' name='TextBox'/>
             <p:cNvSpPr/>
             <p:nvPr/>
           </p:nvSpPr>

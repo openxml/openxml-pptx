@@ -13,7 +13,7 @@ RSpec.describe OpenXml::Shapes::Image do
       expected_output = """
       <p:pic>
         <p:nvPicPr>
-          <p:cNvPr id='#{subject.object_id}' name='Picture'/>
+          <p:cNvPr id='#{subject.object_id % OpenXml::Pptx::MAX_ID_SIZE}' name='Picture'/>
           <p:cNvPicPr/>
           <p:nvPr/>
         </p:nvPicPr>
