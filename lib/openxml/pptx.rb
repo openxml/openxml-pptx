@@ -1,5 +1,6 @@
 module OpenXml
   module Pptx
+    MAX_ID_SIZE = 2**31 - 1
   end
 end
 

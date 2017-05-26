@@ -4,7 +4,6 @@ module OpenXml
   module Pptx
     module Elements
       class SlideId < OpenXml::Element
-        MAX_SIZE = 2**31 - 1
         tag :sldId
 
         attribute :rid, displays_as: :id, expects: :string, namespace: :r
@@ -13,7 +12,7 @@ module OpenXml
         def initialize(relationship_id)
           super()
           self.rid = relationship_id.to_s
-          self.id = object_id % MAX_SIZE
+          self.id = object_id % OpenXml::Pptx::MAX_ID_SIZE
         end
       end
 

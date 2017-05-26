@@ -46,7 +46,7 @@ module OpenXml
       def nonvisual_shape_property
         @nonvisual_shape_property ||= OpenXml::Pptx::Elements::ShapeNonVisual.new.tap {|nv_shape_property|
           nv_shape_property << OpenXml::Pptx::Elements::NonvisualDrawingProperties.new.tap { |nvdp|
-            nvdp.id = object_id
+            nvdp.id = object_id % OpenXml::Pptx::MAX_ID_SIZE
             nvdp.name = "TextBox"
           }
           nv_shape_property << OpenXml::Pptx::Elements::NonvisualShapeDrawingProperties.new
