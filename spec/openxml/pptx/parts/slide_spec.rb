@@ -28,8 +28,9 @@ RSpec.describe OpenXml::Pptx::Parts::Slide do
   end
 
   describe "with text" do
-    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332)}
-    let(:text) { OpenXml::Shapes::Text.new("Hello World", bounds) }
+
+    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332) }
+    let(:text) { OpenXml::Shapes::Text.new(TextBody("Hello World"), bounds) }
 
     before do
       subject.add_shape(text)
@@ -43,10 +44,10 @@ RSpec.describe OpenXml::Pptx::Parts::Slide do
   end
 
   describe "with 2 texts" do
-    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332)}
-    let(:text) { OpenXml::Shapes::Text.new("Hello World", bounds) }
-    let(:bounds2) { OpenXml::Shapes::Bounds.new(87682, 369332, 1377863, 369332)}
-    let(:text2) { OpenXml::Shapes::Text.new("Bye World", bounds2) }
+    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332) }
+    let(:text) { OpenXml::Shapes::Text.new(TextBody("Hello World"), bounds) }
+    let(:bounds2) { OpenXml::Shapes::Bounds.new(87682, 369332, 1377863, 369332) }
+    let(:text2) { OpenXml::Shapes::Text.new(TextBody("Bye World"), bounds2) }
 
     before do
       subject.add_shape text

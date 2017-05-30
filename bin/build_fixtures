@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# A script to quickly build all of the .pptx fixtures from the project's root
+
+cd ./spec/fixtures/
+for f in ./*; do
+  if [[ -d $f ]]; then
+    ( cd $f && echo "Building $f.pptx" && zip -r ../$f.pptx ./* > /dev/null )
+  fi
+done

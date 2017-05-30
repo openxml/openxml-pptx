@@ -139,13 +139,42 @@ describe OpenXml::Pptx::Package do
     end
   end
 
+  context "with a slide with text and a custom size" do
+    let(:theme) { OpenXml::Pptx::Parts::Theme.new }
+    let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
+    let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
+    let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
+    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332) }
+    let(:text) { OpenXml::Shapes::Text.new(TextBody("Hello World"), bounds) }
+
+    before do
+      slide.add_shape text
+      subject.presentation.slide_size = OpenXml::Pptx::Elements::SlideSize.new(13004800, 9753600)
+      subject.presentation.add_slide(slide)
+    end
+
+    specify do
+      expect(subject.content_types).to be_instance_of(OpenXml::Parts::ContentTypes)
+    end
+
+    specify do
+      expect(entries_of(subject)).to contain_exactly(*entries_of(pptx("text_slide_custom_size")))
+    end
+
+    pptx("text_slide_custom_size").parts.each do |part_path, expected_part|
+      specify "part at #{part_path} has proper content" do
+        expect(content_of(subject, part_path)).to be_equivalent_to(expected_part.content).ignoring_attr_values("Id", "id", "name")
+      end
+    end
+  end
+
   context "with a slide with text" do
     let(:theme) { OpenXml::Pptx::Parts::Theme.new }
     let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
     let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
     let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
-    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332)}
-    let(:text) { OpenXml::Shapes::Text.new("Hello World", bounds) }
+    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332) }
+    let(:text) { OpenXml::Shapes::Text.new(TextBody("Hello World"), bounds) }
 
     before do
       slide.add_shape text
@@ -172,10 +201,10 @@ describe OpenXml::Pptx::Package do
     let(:master) { OpenXml::Pptx::Parts::SlideMaster.new(theme) }
     let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
     let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
-    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332)}
-    let(:text) { OpenXml::Shapes::Text.new("Hello World", bounds) }
+    let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332) }
+    let(:text) { OpenXml::Shapes::Text.new(TextBody("Hello World"), bounds) }
     let(:bounds2) { OpenXml::Shapes::Bounds.new(87682, 369332, 1377863, 369332)}
-    let(:text2) { OpenXml::Shapes::Text.new("Bye World", bounds2) }
+    let(:text2) { OpenXml::Shapes::Text.new(TextBody("Bye World"), bounds2) }
 
     before do
       slide.add_shape text
@@ -204,8 +233,8 @@ describe OpenXml::Pptx::Package do
     let(:layout) { OpenXml::Pptx::Parts::SlideLayout.new(master) }
     let(:slide) { OpenXml::Pptx::Parts::Slide.new(layout) }
     let(:bounds) { OpenXml::Shapes::Bounds.new(0, 0, 1465545, 369332)}
-    let(:text) { OpenXml::Shapes::Text.new("Hello World", bounds) }
-    let(:bounds2) { OpenXml::Shapes::Bounds.new(5359400, 2692400, 1463040, 1463040)}
+    let(:text) { OpenXml::Shapes::Text.new(TextBody("Hello World"), bounds) }
+    let(:bounds2) { OpenXml::Shapes::Bounds.new(5359400, 2692400, 1463040, 1463040) }
     let(:image_path) { Pathname("spec/fixtures/pic_slide/ppt/media/image1.jpg") }
     let(:pic) { OpenXml::Shapes::Image.new(image_path, bounds2) }
 
