@@ -9,7 +9,7 @@ module OpenXml
 
       attribute :italic, displays_as: :i, expects: :boolean
       attribute :bold, displays_as: :b, expects: :boolean
-      attribute :size, displays_as: :sz, one_of: (100..400_000).to_a
+      attribute :size, displays_as: :sz, in_range: (100..400_000)
       attribute :strike, one_of: %w[sngStrike dblStrike noStrike]
       attribute :underline, displays_as: :u, one_of: %w[
         dash
