@@ -1,4 +1,4 @@
-require "openxml/extract/element"
+require "openxml/pptx/element"
 require "openxml/pptx/elements/nonvisual_properties"
 require "openxml/pptx/elements/nonvisual_drawing_properties"
 require "openxml/pptx/elements/nonvisual_group_shape_drawing_properties"
@@ -6,7 +6,7 @@ require "openxml/pptx/elements/nonvisual_group_shape_drawing_properties"
 module OpenXml
   module Pptx
     module Elements
-      class NonvisualPropertiesGroupShape < OpenXml::Element
+      class NonvisualPropertiesGroupShape < OpenXml::Pptx::Element
         tag :nvGrpSpPr
 
         def nonvisual_drawing_properties

@@ -1,10 +1,12 @@
-require "openxml/extract/container"
+require "openxml/has_children"
 require "openxml/pptx/elements/shape_tree"
 
 module OpenXml
   module Pptx
     module Elements
-      class CommonSlideData < OpenXml::Container
+      class CommonSlideData < Element
+        include HasChildren
+
         tag :cSld
 
         attribute :name

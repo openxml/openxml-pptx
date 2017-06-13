@@ -1,18 +1,18 @@
 GIT
-  remote: git://github.com/openxml/openxml-drawingml.git
-  revision: 7bf00c8ea62f4a71250be9cb069bfad4d78620d5
+  remote: https://github.com/openxml/openxml-drawingml.git
+  revision: a33ba0016aa7ffc0ffe5a66851b62222ad0c6fb6
   branch: master
   specs:
     openxml-drawingml (0.1.0)
       nokogiri
-      openxml-package (>= 0.2.2)
+      openxml-package (~> 0.2.9)
 
 GIT
-  remote: git://github.com/openxml/openxml-package.git
-  revision: 8502885d2872be100bd5fdba8789360a3cf48dcb
+  remote: https://github.com/openxml/openxml-package.git
+  revision: b896aef0b8c088c26dd4316ffd59c380ecc868e5
   branch: master
   specs:
-    openxml-package (0.2.8)
+    openxml-package (0.2.9)
       nokogiri
       ox
       rubyzip (~> 1.2.1)
@@ -51,16 +51,16 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    lumberjack (1.0.11)
+    lumberjack (1.0.12)
     method_source (0.8.2)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.2.0)
     nenv (0.3.0)
-    nokogiri (1.7.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.0)
+      mini_portile2 (~> 2.2.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    ox (2.4.11)
+    ox (2.5.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -69,19 +69,19 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
-    rspec (3.5.0)
-      rspec-core (~> 3.5.0)
-      rspec-expectations (~> 3.5.0)
-      rspec-mocks (~> 3.5.0)
-    rspec-core (3.5.4)
-      rspec-support (~> 3.5.0)
-    rspec-expectations (3.5.0)
+    rspec (3.6.0)
+      rspec-core (~> 3.6.0)
+      rspec-expectations (~> 3.6.0)
+      rspec-mocks (~> 3.6.0)
+    rspec-core (3.6.0)
+      rspec-support (~> 3.6.0)
+    rspec-expectations (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.5.0)
-    rspec-mocks (3.5.0)
+      rspec-support (~> 3.6.0)
+    rspec-mocks (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.5.0)
-    rspec-support (3.5.0)
+      rspec-support (~> 3.6.0)
+    rspec-support (3.6.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     shellany (0.0.1)

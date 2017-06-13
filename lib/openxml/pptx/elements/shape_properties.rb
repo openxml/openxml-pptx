@@ -1,9 +1,12 @@
 module OpenXml
   module Pptx
     module Elements
-      class ShapeProperties < OpenXml::Container
+      class ShapeProperties < Element
+        include HasChildren
+
         namespace :p
         tag :spPr
+
       end
     end
   end

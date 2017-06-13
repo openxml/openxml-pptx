@@ -1,6 +1,6 @@
 module OpenXml
   module Elements
-    class Text < OpenXml::Element
+    class Text < OpenXml::Pptx::Element
       namespace :a
       tag :t
 

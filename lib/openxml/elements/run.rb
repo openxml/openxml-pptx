@@ -1,8 +1,11 @@
 module OpenXml
   module Elements
-    class Run < OpenXml::Container
+    class Run < Element
+      include HasChildren
+
       namespace :a
       tag :r
+
     end
   end
 end

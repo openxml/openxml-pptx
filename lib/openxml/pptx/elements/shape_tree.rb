@@ -4,7 +4,7 @@ require "openxml/pptx/elements/group_shape_properties"
 module OpenXml
   module Pptx
     module Elements
-      class ShapeTree < OpenXml::Element
+      class ShapeTree < OpenXml::Pptx::Element
         namespace :p
         tag :spTree
 

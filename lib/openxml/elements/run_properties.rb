@@ -3,7 +3,9 @@ require "openxml/elements/latin"
 
 module OpenXml
   module Elements
-    class RunProperties < OpenXml::Container
+    class RunProperties < Element
+      include HasChildren
+
       namespace :a
       tag :rPr
 

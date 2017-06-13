@@ -1,9 +1,9 @@
-require "openxml/extract/element"
+require "openxml/pptx/element"
 
 module OpenXml
   module Pptx
     module Elements
-      class ColorMap < OpenXml::Element
+      class ColorMap < OpenXml::Pptx::Element
         tag :clrMap
 
         attribute :bg1

@@ -1,6 +1,6 @@
 module OpenXml
   module Elements
-    class RGBColor < OpenXml::Element
+    class RGBColor < OpenXml::Pptx::Element
       namespace :a
       tag :srgbClr
       name :rgb_color

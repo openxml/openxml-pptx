@@ -1,9 +1,12 @@
 module OpenXml
   module Pptx
     module Elements
-      class TextBody < OpenXml::Container
+      class TextBody < Element
+        include HasChildren
+
         namespace :p
         tag :txBody
+
       end
     end
   end

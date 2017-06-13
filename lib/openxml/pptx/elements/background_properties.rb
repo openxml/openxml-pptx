@@ -4,7 +4,9 @@ require "openxml/elements/solid_fill"
 module OpenXml
   module Pptx
     module Elements
-      class BackgroundProperties < OpenXml::Container
+      class BackgroundProperties < Element
+        include HasChildren
+
         namespace :p
         tag :bgPr
 

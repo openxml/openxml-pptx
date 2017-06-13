@@ -1,9 +1,12 @@
 module OpenXml
   module Pptx
     module Elements
-      class Picture < OpenXml::Container
+      class Picture < Element
+        include HasChildren
+
         namespace :p
         tag :pic
+
       end
     end
   end

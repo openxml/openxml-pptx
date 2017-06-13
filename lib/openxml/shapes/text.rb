@@ -62,9 +62,12 @@ module OpenXml
         }
       end
 
-      class Shape < OpenXml::Container
+      class Shape < Element
+        include HasChildren
+
         namespace :p
         tag :sp
+
       end
     end
   end

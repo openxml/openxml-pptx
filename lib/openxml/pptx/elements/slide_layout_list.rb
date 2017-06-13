@@ -1,9 +1,9 @@
-require "openxml/extract/element"
+require "openxml/pptx/element"
 
 module OpenXml
   module Pptx
     module Elements
-      class SlideLayoutId < OpenXml::Element
+      class SlideLayoutId < OpenXml::Pptx::Element
         tag :sldLayoutId
 
         attribute :id, expects: :string, namespace: :r
@@ -14,7 +14,7 @@ module OpenXml
         end
       end
 
-      class SlideLayoutList < OpenXml::Element
+      class SlideLayoutList < OpenXml::Pptx::Element
         tag :sldLayoutIdLst
 
         attr_accessor :layout_ids

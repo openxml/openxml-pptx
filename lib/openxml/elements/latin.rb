@@ -1,6 +1,6 @@
 module OpenXml
   module Elements
-    class Latin < OpenXml::Element
+    class Latin < OpenXml::Pptx::Element
       namespace :a
       tag :latin
       attribute :typeface, expects: :string

@@ -1,9 +1,9 @@
-require "openxml/extract/element"
+require "openxml/pptx/element"
 
 module OpenXml
   module Pptx
     module Elements
-      class NonvisualDrawingProperties < OpenXml::Element
+      class NonvisualDrawingProperties < OpenXml::Pptx::Element
         tag :cNvPr
 
         attribute :id

@@ -1,6 +1,6 @@
 module OpenXml
   module Elements
-    class BodyProperties < OpenXml::Element
+    class BodyProperties < OpenXml::Pptx::Element
       namespace :a
       tag :bodyPr
     end

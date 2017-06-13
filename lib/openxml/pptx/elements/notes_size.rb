@@ -1,9 +1,9 @@
-require "openxml/extract/element"
+require "openxml/pptx/element"
 
 module OpenXml
   module Pptx
     module Elements
-      class NotesSize < OpenXml::Element
+      class NotesSize < OpenXml::Pptx::Element
         tag :notesSz
 
         attribute :cx

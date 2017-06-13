@@ -1,7 +1,7 @@
 module OpenXml
   module Pptx
     module Elements
-      class NonVisualPictrueDrawingProperties < OpenXml::Element
+      class NonVisualPictrueDrawingProperties < OpenXml::Pptx::Element
         namespace :p
         tag :cNvPicPr
       end
