@@ -1,92 +1,86 @@
-require "openxml/shapes/text"
-
 module OpenXml
   module Pptx
     module Parts
       class Slide < OpenXml::Part
-        attr_reader :layout
-        attr_accessor :relationships, :id, :shapes
-        private :relationships=, :id=, :shapes=
+        include OpenXml::RelatablePart
+        include OpenXml::HasAttributes
+        include OpenXml::ContainsProperties
+        attr_reader :images
+
+        relationship_type "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide"
+        content_type "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
+        default_path "ppt/slides/slide.xml"
+
+        attribute :show_master_shapes, displays_as: :showMasterSp, expects: :boolean
+        attribute :show_master_placeholder_animations, displays_as: :showMasterPhAnim, expects: :boolean
+        attribute :show_slide, displays_as: :show, expects: :boolean
+
+        property :common_slide_data, required: true
+        property :color_mapping_override
+
+        # = TODO ================
+        # property :transition
+        # property :timing
+
+        property :extension_list
 
         LAYOUT_SCHEMA =
-          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout".freeze
 
-        def initialize(layout)
-          self.relationships = OpenXml::Parts::Rels.new
-          self.layout = layout
-          self.shapes = []
+        def initialize(*_args)
+          super
+          @images = []
         end
 
-        private = def layout=(layout)
-          @layout = layout
-          add_relationship(layout.relationship)
+        # Necessary for HasAttributes
+        def name
+          "slide"
         end
 
-        def add_relationship(relationship)
-          relationships.push(relationship)
+        def add_image(image_part)
+          images.push(image_part)
+          index = (parent && parent.next_image_index) || images.count
+          add_child_part(image_part, with_index: index)
         end
 
-        def add_to(slide_count, ancestors)
-          parent, *rest = ancestors
-          parent.add_part rest, "slides/slide#{slide_count}.xml", self
-          parent.add_part rest, "slides/_rels/slide#{slide_count}.xml.rels", relationships
-
-          layout.add_to(ancestors)
-
-          parent.add_slide_relationship relationship(slide_count)
-
-          parent.add_override rest, "slides/slide#{slide_count}.xml", "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
-
-          shapes.each do |shape|
-            shape.add_to([self, *ancestors])
+        def build_image_part(path)
+          path = Pathname.new(path)
+          OpenXml::Pptx::Parts::Image.new(path.read, extension: path.extname).tap do |image|
+            add_image(image)
           end
         end
 
-        def add_part(ancestors, path, part)
-          parent, *rest = ancestors
-          parent.add_part rest, path, part
-        end
-
-        def add_default(ancestors, extension, type)
-          parent, *rest = ancestors
-          parent.add_default rest, extension, type
-        end
-
-        def common_slide_data
-          @common_slide_data ||= OpenXml::Pptx::Elements::CommonSlideData.new
-        end
-
-        def relationship(slide_count)
-          OpenXml::Elements::Relationship.new(
-            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide",
-            "/ppt/slides/slide#{slide_count}.xml")
+        def set_slide_layout(layout)
+          add_relationship layout.relationship_type, layout.path
         end
 
         def to_xml
           build_standalone_xml do |xml|
-            xml.sld(namespaces) do
-              xml.parent.namespace = :p
-              common_slide_data.to_xml(xml)
+            xml[:p].sld(namespaces.merge(xml_attributes)) do
+              property_xml(xml)
             end
           end
         end
 
-        def add_shape(shape)
-          shapes.push shape
-          common_slide_data.add_shape shape
+        # Convenience accessors
+        def shapes
+          common_slide_data.shape_tree.shapes
         end
 
-        def set_background(backgorund)
-          common_slide_data.add_data backgorund
+        def background_properties
+          common_slide_data.background.background_properties
         end
 
-        private def namespaces
+      private
+
+        def namespaces
           {
             "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
             "xmlns:r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
             "xmlns:p": "http://schemas.openxmlformats.org/presentationml/2006/main"
           }
         end
+
       end
     end
   end

@@ -1,109 +1,131 @@
 # frozen_string_literals: true
-require "openxml/pptx/elements/notes_size"
-require "openxml/pptx/elements/slide_size"
-require "openxml/pptx/elements/common_slide_data"
-require "openxml/pptx/elements/color_map"
-require "openxml/pptx/elements/slide_layout_list"
 
 module OpenXml
   module Pptx
     module Parts
       class SlideMaster < OpenXml::Part
-        attr_reader :theme
-        attr_accessor :relationships, :layouts
-        private :relationships=, :layouts=
+        include OpenXml::RelatablePart
+        include OpenXml::HasAttributes
+        include OpenXml::ContainsProperties
+        attr_reader :theme, :layouts, :images
 
-        def initialize(theme)
-          self.relationships = OpenXml::Parts::Rels.new
-          self.theme = theme
-          self.layouts = OpenXml::Pptx::Elements::SlideLayoutList.new
+        relationship_type "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster"
+        content_type "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
+        default_path "ppt/slideMasters/slideMaster.xml"
+
+        attribute :should_preserve, displays_as: :preserve, expects: :boolean
+
+        property :common_slide_data, required: true
+        property :color_mapping, required: true
+        property :slide_layout_id_list
+
+        # = TODO ================
+        # property :transition
+        # property :timing
+        # property :header_footer
+
+        property :text_styles
+
+        property :extension_list
+
+        def initialize(*_args)
+          super
+          @layouts = []
+          @images = []
         end
 
-        private def theme=(theme)
+        # Necessary for HasAttributes
+        def name
+          "slide_master"
+        end
+
+        def set_theme(theme)
           @theme = theme
-          add_relationship theme.relationship_type,
-            theme.relationship_target
+          add_relationship theme.relationship_type, theme.path
         end
 
-        def add_relationship(type, target)
-          relationships.add_relationship(type, target)
+        def add_slide_layout(layout)
+          layouts.push(layout)
+          add_child_part(layout, with_index: layouts.count)
+          slide_layout_id_list << OpenXml::Pptx::Properties::SlideLayoutId.new.tap do |layout_id|
+            layout_id.rid = relationships_by_path[layout.path].id
+          end
         end
 
-        def add_to(ancestors)
-          parent, *rest = ancestors
-
-          return if parent.has_part?(self)
-
-          parent.add_part rest, "slideMasters/slideMasterBasic.xml", self
-          parent.add_part rest, "slideMasters/_rels/slideMasterBasic.xml.rels", relationships
-          parent.add_override rest, "slideMasters/slideMasterBasic.xml", "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
-
-          parent.add_master_relationship relationship
-
-          theme.add_to [parent, *rest]
+        def build_slide_layout(named: nil)
+          OpenXml::Pptx::Parts::SlideLayout.new.tap do |layout|
+            layout.set_slide_master(self)
+            layout.common_slide_data.slide_name = named unless named.nil?
+            add_slide_layout(layout)
+          end
         end
 
-        def relationship_type
-          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster"
+        def add_image(image_part)
+          images.push(image_part)
+          index = (parent && parent.next_image_index) || images.count
+          add_child_part(image_part, with_index: index)
         end
 
-        def relationship_target
-          "/ppt/slideMasters/slideMasterBasic.xml"
+        def build_image_part(path)
+          path = Pathname.new(path)
+          OpenXml::Pptx::Parts::Image.new(path.read, extension: path.extname).tap do |image|
+            add_image(image)
+          end
         end
 
-        def relationship
-          @relationship ||= OpenXml::Elements::Relationship.new(relationship_type, relationship_target)
-        end
-
-        def common_slide_data
-          OpenXml::Pptx::Elements::CommonSlideData.new
-        end
-
-        def slide_layout_list
-          @slide_layout_list ||= OpenXml::Pptx::Elements::SlideLayoutList.new
-        end
-
-        def add_layout(layout)
-          relationship = add_relationship(layout.relationship_type,
-                                          layout.relationship_target)
-          self.slide_layout_list.add_layout(relationship)
-        end
-
-        def color_map
-          OpenXml::Pptx::Elements::ColorMap.new.tap { |color_map|
-            color_map.bg1 = "lt1"
-            color_map.tx1 = "dk1"
-            color_map.bg2 = "lt2"
-            color_map.tx2 = "dk2"
-            color_map.accent1 = "accent1"
-            color_map.accent2 = "accent2"
-            color_map.accent3 = "accent3"
-            color_map.accent4 = "accent4"
-            color_map.accent5 = "accent5"
-            color_map.accent6 = "accent6"
-            color_map.hlink = "hlink"
-            color_map.folHlink = "folHlink"
-          }
+        def next_image_index
+          @image_index = (parent && parent.next_image_index) || @image_index + 1
         end
 
         def to_xml
           build_standalone_xml do |xml|
-            xml.sldMaster(namespaces) do
-              xml.parent.namespace = :p
-              common_slide_data.to_xml(xml)
-              color_map.to_xml(xml)
-              slide_layout_list.to_xml(xml)
+            xml[:p].sldMaster(namespaces.merge(xml_attributes)) do
+              property_xml(xml)
             end
           end
         end
 
-        private def namespaces
+        def build_required_properties
+          super
+          DEFAULT_COLOR_MAPPING.each do |key, value|
+            color_mapping.public_send(:"#{key}=", value)
+          end
+        end
+
+        # Convenience accessors
+        def shapes
+          common_slide_data.shape_tree.shapes
+        end
+
+        def background_properties
+          common_slide_data.background.background_properties
+        end
+
+      private
+
+        def namespaces
           {
             "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
             "xmlns:r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
             "xmlns:p": "http://schemas.openxmlformats.org/presentationml/2006/main"
           }
         end
+
+        DEFAULT_COLOR_MAPPING = {
+          bg1: :lt1,
+          tx1: :dk1,
+          bg2: :lt2,
+          tx2: :dk2,
+          accent1: :accent1,
+          accent2: :accent2,
+          accent3: :accent3,
+          accent4: :accent4,
+          accent5: :accent5,
+          accent6: :accent6,
+          hlink: :hlink,
+          folHlink: :folHlink
+        }.freeze
+
       end
     end
   end
