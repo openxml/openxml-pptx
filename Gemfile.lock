@@ -1,28 +1,9 @@
-GIT
-  remote: https://github.com/openxml/openxml-drawingml.git
-  revision: a33ba0016aa7ffc0ffe5a66851b62222ad0c6fb6
-  branch: master
-  specs:
-    openxml-drawingml (0.1.0)
-      nokogiri
-      openxml-package (~> 0.2.9)
-
-GIT
-  remote: https://github.com/openxml/openxml-package.git
-  revision: b896aef0b8c088c26dd4316ffd59c380ecc868e5
-  branch: master
-  specs:
-    openxml-package (0.2.9)
-      nokogiri
-      ox
-      rubyzip (~> 1.2.1)
-
 PATH
   remote: .
   specs:
     openxml-pptx (0.1.0)
-      openxml-drawingml (>= 0.1.0)
-      openxml-package (>= 0.2.2)
+      openxml-drawingml (>= 0.2.0)
+      openxml-package (>= 0.3.2)
 
 GEM
   remote: https://rubygems.org/
@@ -60,7 +41,14 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    ox (2.5.0)
+    openxml-drawingml (0.2.0)
+      nokogiri
+      openxml-package (~> 0.3.2)
+    openxml-package (0.3.2)
+      nokogiri
+      ox
+      rubyzip (~> 1.2.1)
+    ox (2.8.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -96,11 +84,9 @@ DEPENDENCIES
   equivalent-xml
   guard
   guard-rspec
-  openxml-drawingml!
-  openxml-package!
   openxml-pptx!
   rake (~> 10.0)
   rspec
 
 BUNDLED WITH
-   1.14.6
+   1.15.4
