@@ -1,134 +1,60 @@
 # frozen_string_literals: true
-require "openxml/pptx/elements/notes_size"
-require "openxml/pptx/elements/slide_size"
+require "openxml/drawingml/parts/theme"
 
 module OpenXml
   module Pptx
     module Parts
-      class Theme < OpenXml::Part
-        attr_accessor :relationships
-        private :relationships=
+      class Theme < OpenXml::DrawingML::Parts::Theme
+        include OpenXml::RelatablePart
 
-        def initialize
-          self.relationships = OpenXml::Parts::Rels.new
-        end
+        relationship_type "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
+        content_type "application/vnd.openxmlformats-officedocument.theme+xml"
+        default_path "ppt/theme/theme.xml"
 
-        def add_relationship(relationship)
-          relationships.push(relationship)
-        end
+        def relationships_path; end
 
-        def add_to(ancestors)
-          parent, *rest = ancestors
-          parent.add_part rest, "theme/themeBasic.xml", self
-          parent.add_override rest, "theme/themeBasic.xml", "application/vnd.openxmlformats-officedocument.theme+xml"
-
-          parent.add_relationship relationship
-        end
-
-        def relationship_type
-          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
-        end
-
-        def relationship_target
-          "/ppt/theme/themeBasic.xml"
-        end
-
-        def relationship
-          @relationship ||= OpenXml::Elements::Relationship.new(relationship_type,
-                                              relationship_target)
-        end
-
-        def to_xml
-          xml = <<~XML
-          <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-          <a:theme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="Office Theme">
-            <a:themeElements>
-              <a:clrScheme name="Office">
-                <a:dk1>
-                  <a:sysClr val="windowText" lastClr="000000"/>
-                </a:dk1>
-                <a:lt1>
-                  <a:sysClr val="window" lastClr="FFFFFF"/>
-                </a:lt1>
-                <a:dk2>
-                  <a:srgbClr val="44546A"/>
-                </a:dk2>
-                <a:lt2>
-                  <a:srgbClr val="E7E6E6"/>
-                </a:lt2>
-                <a:accent1>
-                  <a:srgbClr val="4472C4"/>
-                </a:accent1>
-                <a:accent2>
-                  <a:srgbClr val="ED7D31"/>
-                </a:accent2>
-                <a:accent3>
-                  <a:srgbClr val="A5A5A5"/>
-                </a:accent3>
-                <a:accent4>
-                  <a:srgbClr val="FFC000"/>
-                </a:accent4>
-                <a:accent5>
-                  <a:srgbClr val="5B9BD5"/>
-                </a:accent5>
-                <a:accent6>
-                  <a:srgbClr val="70AD47"/>
-                </a:accent6>
-                <a:hlink>
-                  <a:srgbClr val="0563C1"/>
-                </a:hlink>
-                <a:folHlink>
-                  <a:srgbClr val="954F72"/>
-                </a:folHlink>
-              </a:clrScheme>
-              <a:fontScheme name="Office">
-                <a:majorFont>
-                  <a:latin typeface="Calibri Light"/>
-                  <a:ea typeface=""/>
-                  <a:cs typeface=""/>
-                </a:majorFont>
-                <a:minorFont>
-                  <a:latin typeface="Calibri"/>
-                  <a:ea typeface=""/>
-                  <a:cs typeface=""/>
-                </a:minorFont>
-              </a:fontScheme>
-              <a:fmtScheme name="Office">
-                <a:fillStyleLst>
-                  <a:noFill/>
-                  <a:noFill/>
-                  <a:noFill/>
-                </a:fillStyleLst>
-                <a:lnStyleLst>
-                  <a:ln/>
-                  <a:ln/>
-                  <a:ln/>
-                </a:lnStyleLst>
-                <a:effectStyleLst>
-                  <a:effectStyle>
-                    <a:effectLst/>
-                  </a:effectStyle>
-                  <a:effectStyle>
-                    <a:effectLst/>
-                  </a:effectStyle>
-                  <a:effectStyle>
-                    <a:effectLst/>
-                  </a:effectStyle>
-                </a:effectStyleLst>
-                <a:bgFillStyleLst>
-                  <a:noFill/>
-                  <a:noFill/>
-                  <a:noFill/>
-                </a:bgFillStyleLst>
-              </a:fmtScheme>
-            </a:themeElements>
-          </a:theme>
-          XML
-          def xml.to_s(*args)
-            self
+        # Default theme
+        def self.office_theme
+          new.tap do |theme|
+            theme.theme_name = "Office Theme"
+            theme.theme_elements.color_scheme.tap do |scheme|
+              scheme.scheme_name = "Office"
+              scheme.dark_one.system_color = :windowText
+              scheme.dark_one.system_color.last_color = "000000"
+              scheme.light_one.system_color = :window
+              scheme.light_one.system_color.last_color = "FFFFFF"
+              scheme.dark_two.rgb = "44546A"
+              scheme.light_two.rgb = "E7E6E6"
+              scheme.accent_one.rgb = "4472C4"
+              scheme.accent_two.rgb = "ED7D31"
+              scheme.accent_three.rgb = "A5A5A5"
+              scheme.accent_four.rgb = "FFC000"
+              scheme.accent_five.rgb = "5B9BD5"
+              scheme.accent_six.rgb = "70AD47"
+              scheme.hyperlink.rgb = "0563C1"
+              scheme.followed_hyperlink.rgb = "954F72"
+            end
+            theme.theme_elements.font_scheme.tap do |scheme|
+              scheme.scheme_name = "Office"
+              scheme.major_font.latin_font = "Calibri Light"
+              scheme.major_font.east_asian_font = ""
+              scheme.major_font.complex_script_font = ""
+              scheme.minor_font.latin_font = "Calibri"
+              scheme.minor_font.east_asian_font = ""
+              scheme.minor_font.complex_script_font = ""
+            end
+            theme.theme_elements.format_scheme.tap do |scheme|
+              scheme.scheme_name = "Office"
+              3.times do
+                scheme.fill_style_list << OpenXml::DrawingML::Properties::FillNone.new(true)
+                scheme.line_style_list << OpenXml::DrawingML::Properties::Outline.new
+                scheme.effect_style_list << OpenXml::DrawingML::Properties::EffectStyle.new.tap(&:effect_list)
+                scheme.background_fill_style_list << OpenXml::DrawingML::Properties::FillNone.new(true)
+              end
+            end
           end
-          xml
         end
+
       end
     end
   end
