@@ -23,7 +23,8 @@ module OpenXml
           ".png" => "image/png",
           ".gif" => "image/gif",
           ".bmp" => "image/bmp",
-          ".tiff" => "image/tiff"
+          ".tiff" => "image/tiff",
+          ".jxr" => "image/vnd.ms-photo"
         }.freeze
 
       end
