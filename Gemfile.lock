@@ -78,13 +78,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.11)
+  bundler
   equivalent-xml
   guard
   guard-rspec
   openxml-pptx!
-  rake (~> 10.0)
+  rake
   rspec
 
 BUNDLED WITH
-   1.17.2
+   2.1.4
