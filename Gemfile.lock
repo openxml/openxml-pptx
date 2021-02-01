@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    openxml-pptx (0.2.1)
+    openxml-pptx (0.2.2)
       openxml-drawingml (>= 0.2.0)
       openxml-package (>= 0.3.2)
 
@@ -34,24 +34,26 @@ GEM
       ruby_dep (~> 1.2)
     lumberjack (1.0.13)
     method_source (0.9.0)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.5.0)
     nenv (0.3.0)
-    nokogiri (1.8.4)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.11.1)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
     openxml-drawingml (0.2.0)
       nokogiri
       openxml-package (~> 0.3.2)
-    openxml-package (0.3.3)
+    openxml-package (0.3.4)
       nokogiri
       ox
-      rubyzip (~> 1.2.2)
-    ox (2.11.0)
+      rubyzip
+    ox (2.14.1)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    racc (1.5.2)
     rake (10.5.0)
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
@@ -70,7 +72,7 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     ruby_dep (1.5.0)
-    rubyzip (1.2.4)
+    rubyzip (2.3.0)
     shellany (0.0.1)
     thor (0.20.0)
 
@@ -78,13 +80,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.11)
+  bundler
   equivalent-xml
   guard
   guard-rspec
   openxml-pptx!
-  rake (~> 10.0)
+  rake
   rspec
 
 BUNDLED WITH
-   1.17.2
+   2.1.4
