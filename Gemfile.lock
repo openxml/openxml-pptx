@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    openxml-pptx (0.2.2)
+    openxml-pptx (0.3.0)
       openxml-drawingml (>= 0.2.0)
       openxml-package (>= 0.3.2)
 
