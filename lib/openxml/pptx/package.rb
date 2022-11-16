@@ -21,7 +21,7 @@ module OpenXml
 
       def set_defaults
         super
-        @presentation = OpenXml::Pptx::Parts::Presentation.new parent: self
+        @presentation = OpenXml::Pptx::Parts::Presentation.new(parent: self)
         add_part presentation.path.to_s, presentation
         add_part presentation.relationships_path, presentation.relationships
         add_override presentation.path.to_s, presentation.content_type

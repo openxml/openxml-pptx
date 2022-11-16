@@ -56,8 +56,8 @@ module OpenXml
           "presentation"
         end
 
-        def initialize(*_args)
-          super
+        def initialize(**_kwargs)
+          super(**_kwargs)
           @slides = []
           @slide_masters = []
           @themes = []
