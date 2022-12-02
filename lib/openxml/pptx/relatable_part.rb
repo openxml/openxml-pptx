@@ -26,8 +26,8 @@ module OpenXml
 
     attr_accessor :parent
 
-    def initialize(parent: nil, **_options)
-      @parent = parent
+    def initialize(options={})
+      @parent = options[:parent]
       super()
     end
 
